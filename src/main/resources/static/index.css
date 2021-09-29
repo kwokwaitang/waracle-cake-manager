@@ -1,0 +1,12 @@
+a {
+    display: block;
+}
+
+.error-field {
+    border-color: red;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
