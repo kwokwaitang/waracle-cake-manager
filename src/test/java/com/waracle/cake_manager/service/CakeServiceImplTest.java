@@ -8,18 +8,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 
 class CakeServiceImplTest {
 
-    @Mock
-    ModelMapper modelMapper;
+    @Autowired
+    ModelMapper modelMapper = new ModelMapper();
 
     @Mock
     CakeRepository cakeRepository;
@@ -36,36 +37,30 @@ class CakeServiceImplTest {
     void getAvailableCakes() {
         Cake cake1 = new Cake();
         cake1.setEmployeeId(1L);
-        cake1.setTitle("The Biscoff Cake");
-        cake1.setDescription("Vanilla sponge topped with Lotus biscuits");
-        cake1.setImageUrl("https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203");
+        cake1.setTitle("Lemon cheesecake");
+        cake1.setDescription("A cheesecake made of lemon");
+        cake1.setImageUrl("https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg");
 
-        List<Cake> cakes = new ArrayList<>();
-        cakes.add(cake1);
+        Cake cake2 = new Cake();
+        cake2.setEmployeeId(2L);
+        cake2.setTitle("victoria sponge");
+        cake2.setDescription("sponge with jam");
+        cake2.setImageUrl("http://www.bbcgoodfood.com/sites/bbcgoodfood.com/files/recipe_images/recipe-image-legacy-id--1001468_10.jpg");
 
-        when(cakeRepository.findAll()).thenReturn(cakes);
+        Iterable<Cake> iterable = Arrays.asList(cake1, cake2);
 
-//        CakeDto cakeDto = new CakeDto();
-//        cakeDto.setEmployeeId(1L);
-//        cakeDto.setTitle("The Biscoff Cake");
-//        cakeDto.setDescription("Vanilla sponge topped with Lotus biscuits");
-//        cakeDto.setImage("https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203");
-//
-//        List<CakeDto> cakeDtos = new ArrayList<>();
-//        cakeDtos.add(cakeDto);
-//
-//        when(serviceImplUnderTest.getCakes(cakes)).thenReturn(cakeDtos);
+        when(cakeRepository.findAll()).thenReturn(iterable);
 
         List<CakeDto> cakeDtos = serviceImplUnderTest.getAvailableCakes();
 
-        assertEquals(1, cakeDtos.size());
         assertFalse(cakeDtos.isEmpty());
-
-//        assertTrue(serviceImplUnderTest.getAvailableCakes().get(0) instanceof List);
-//        assertEquals("The Biscoff Cake", serviceImplUnderTest.getAvailableCakes().get(0).getTitle());
+        assertEquals(2, cakeDtos.size());
+        assertEquals(cake1.getTitle(), cakeDtos.get(0).getTitle());
+        assertEquals(cake2.getTitle(), cakeDtos.get(1).getTitle());
     }
 
     @Test
     void addCakes() {
+        // TODO
     }
 }

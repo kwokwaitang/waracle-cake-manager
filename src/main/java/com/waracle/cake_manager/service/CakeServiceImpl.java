@@ -33,8 +33,11 @@ public class CakeServiceImpl implements CakeService {
     @Override
     public List<CakeDto> getAvailableCakes() {
         List<Cake> cakes = (List<Cake>) cakeRepository.findAll();
+        if (!cakes.isEmpty()) {
+            return mapList(cakes, CakeDto.class);
+        }
 
-        return getCakes(cakes);
+        return Collections.emptyList();
     }
 
     @LogMethodAccess
