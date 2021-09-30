@@ -1,5 +1,6 @@
 package com.waracle.cake_manager.controller;
 
+import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.form.validator.NewCakeDetailsFormValidator;
 import com.waracle.cake_manager.model.NewCakeRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
@@ -26,7 +28,7 @@ public class CakeController {
     private final CakeService cakeService;
 
     public CakeController(CakeService cakeService) {
-        this.cakeService = cakeService;
+        this.cakeService = Objects.requireNonNull(cakeService, () -> "Missing a cake service");
     }
 
     @InitBinder(value = "newCakeDetails")
@@ -41,6 +43,7 @@ public class CakeController {
      * @param model
      * @return A view with a list of cakes in an acceptable format for a human to read
      */
+    @LogMethodAccess
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("cakes", cakeService.getAvailableCakes());
@@ -56,10 +59,9 @@ public class CakeController {
      * @param model
      * @return The data capture form
      */
+    @LogMethodAccess
     @GetMapping("/new-cake-details")
     public String captureNewCakeDetails(Model model) {
-        LOGGER.info(">>> Running captureNewCakeDetails()");
-
         model.addAttribute("newCakeDetails", new NewCakeDetails());
         model.addAttribute("formFragment", "new-cake-details");
 
@@ -74,24 +76,27 @@ public class CakeController {
      * @param model
      * @return
      */
+    @LogMethodAccess
     @PostMapping("/new-cake-details")
     public String onSubmit(@ModelAttribute("newCakeDetails") @Valid NewCakeDetails newCakeDetails,
                            final Errors errors, final Model model) {
-        LOGGER.info(">>> Running onSubmit()");
+        String view = "form";
 
         model.addAttribute("formFragment", "new-cake-details");
 
         Supplier<String> onSubmitMsg = () -> String.format("Problem with submitted details [%s]", newCakeDetails);
         if (!errors.hasErrors()) {
-            onSubmitMsg = () -> String.format("Site enabling details are fine [%s]", newCakeDetails);
+            onSubmitMsg = () -> String.format("\tNew cake details are fine [%s]", newCakeDetails);
 
             NewCakeRequest newCakeRequest = cakeService.getNewCakeRequest(newCakeDetails);
             NewCakeResponse newCakeResponse = cakeService.addCake(newCakeRequest);
-            LOGGER.info(() -> String.format("Response is [%s]", newCakeResponse));
+            LOGGER.info(() -> String.format("\tResponse is [%s]", newCakeResponse));
+
+            view = "successfully-added-cake";
         }
 
         LOGGER.info(onSubmitMsg);
 
-        return "form";
+        return view;
     }
 }

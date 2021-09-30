@@ -3,6 +3,9 @@ package com.waracle.cake_manager.model;
 public class NewCakeResponse {
     private Long id;
 
+    public NewCakeResponse() {
+    }
+
     public NewCakeResponse(Long id) {
         this.id = id;
     }

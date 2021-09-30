@@ -64,4 +64,8 @@ class CakeServiceImplTest {
 //        assertTrue(serviceImplUnderTest.getAvailableCakes().get(0) instanceof List);
 //        assertEquals("The Biscoff Cake", serviceImplUnderTest.getAvailableCakes().get(0).getTitle());
     }
+
+    @Test
+    void addCakes() {
+    }
 }

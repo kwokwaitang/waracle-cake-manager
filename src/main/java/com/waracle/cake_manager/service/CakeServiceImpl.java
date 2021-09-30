@@ -1,5 +1,6 @@
 package com.waracle.cake_manager.service;
 
+import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.model.Cake;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -24,8 +26,8 @@ public class CakeServiceImpl implements CakeService {
     private final CakeRepository cakeRepository;
 
     public CakeServiceImpl(ModelMapper modelMapper, CakeRepository cakeRepository) {
-        this.modelMapper = modelMapper;
-        this.cakeRepository = cakeRepository;
+        this.modelMapper = Objects.requireNonNull(modelMapper, () -> "Missing a model mapper");
+        this.cakeRepository = Objects.requireNonNull(cakeRepository, () -> "Missing a cake repository");
     }
 
     @Override
@@ -35,11 +37,9 @@ public class CakeServiceImpl implements CakeService {
         return getCakes(cakes);
     }
 
+    @LogMethodAccess
     @Override
     public NewCakeResponse addCake(NewCakeRequest newCakeRequest) {
-        LOGGER.info(">>> Running addCake()");
-        LOGGER.info(() -> String.format("\tParam: newCakeRequest is [%s]", newCakeRequest));
-
         Cake cake = cakeRepository.save(modelMapper.map(newCakeRequest, Cake.class));
         LOGGER.info(() -> String.format("\tSaved cake is [%s]", cake));
 

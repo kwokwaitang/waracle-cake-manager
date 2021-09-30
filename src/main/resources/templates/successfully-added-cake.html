@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-100">
 <head>
     <meta charset="UTF-8">
-    <title>List of available cakes</title>
+    <title>Successfully added a new cake</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/bootstrap-4.6.0/css/bootstrap.min.css"/>
@@ -22,23 +22,8 @@
 <body>
     <main role="main" class="flex-shrink-0">
         <div class="container">
-            <h1>Available cakes</h1>
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Image</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="cake : ${cakes}">
-                    <td th:text="${cake.title}">N/A</td>
-                    <td th:text="${cake.description}">N/A</td>
-                    <td><img th:src="@{${cake.getImage()}}" alt="Media resource" style="width:100px; height:100px"></td>
-                </tr>
-                </tbody>
-            </table>
+            <h1>Successfully added a new cake</h1>
+            <p><a href="/" style="display: inline">Return to home</a> or <a href="/new-cake-details" style="display: inline">Add another new cake</a></p>
         </div>
     </main>
 

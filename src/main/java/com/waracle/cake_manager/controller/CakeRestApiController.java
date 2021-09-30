@@ -1,5 +1,6 @@
 package com.waracle.cake_manager.controller;
 
+import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.model.NewCakeRequest;
 import com.waracle.cake_manager.model.NewCakeResponse;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -27,7 +29,7 @@ public class CakeRestApiController {
     private final CakeService cakeService;
 
     public CakeRestApiController(CakeService cakeService) {
-        this.cakeService = cakeService;
+        this.cakeService = Objects.requireNonNull(cakeService, () -> "Missing a cake service");
     }
 
     /**
@@ -36,10 +38,9 @@ public class CakeRestApiController {
      *
      * @return
      */
+    @LogMethodAccess
     @GetMapping("/cakes")
     public ResponseEntity<List<CakeDto>> getListOfCakes() {
-        LOGGER.info(">>> Running getListOfCakes()");
-
         return ResponseEntity.ok(cakeService.getAvailableCakes());
     }
 
@@ -59,10 +60,9 @@ public class CakeRestApiController {
      * @param newCakeRequest
      * @return Response containing the primary value of the newly added cake
      */
+    @LogMethodAccess
     @PostMapping("/cakes")
     public ResponseEntity<NewCakeResponse> newCakeDetails(@RequestBody NewCakeRequest newCakeRequest) {
-        LOGGER.info(">>> Running newCakeDetails()");
-
         return ResponseEntity.ok(cakeService.addCake(newCakeRequest));
     }
 }

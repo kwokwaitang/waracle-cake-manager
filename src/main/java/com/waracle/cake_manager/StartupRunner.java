@@ -2,6 +2,7 @@ package com.waracle.cake_manager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.dto.Cakes;
 import com.waracle.cake_manager.model.Cake;
@@ -39,10 +40,9 @@ public class StartupRunner implements CommandLineRunner {
         this.httpClient = httpClient;
     }
 
+    @LogMethodAccess
     @Override
     public void run(String... args) throws Exception {
-        LOGGER.info(">>> Running run()");
-
         String jsonCakeData = getJsonCakeData();
         if (StringUtils.isNotBlank(jsonCakeData)) {
             ObjectMapper objectMapper = new ObjectMapper();
