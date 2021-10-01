@@ -59,14 +59,6 @@ public class CakeServiceImpl implements CakeService {
         return new NewCakeRequest(title, description, image);
     }
 
-    private List<CakeDto> getCakes(List<Cake> cakes) {
-        if (!cakes.isEmpty()) {
-            return mapList(cakes, CakeDto.class);
-        }
-
-        return Collections.emptyList();
-    }
-
     /**
      * Generic conversion of a List of entities to a list of DTOs
      * <p>
