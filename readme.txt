@@ -10,8 +10,8 @@ I had a brief look at the original Cake Manager, just some observations:
 This version...
 - I'll add the JWT token today and over the weekend in a separate GIT branch but for the now, the "main" branch deals with the requirements and some unit tests
 - SpringBoot (v2.5.5) is used and developed on Intellij IDEA Ultimate edition
-- Runs of Java 11 but 8 should be fine as well
-- I tend to use the H2 Embedded database for "dev" work (which is accessible ob the browser via /h2-console)
+- Runs off Java 11+
+- I tend to use the H2 Embedded database for "dev" work (which is accessible on the browser via /h2-console with connection details in application-dev.properties)
 - I've placed the project on my own GITHUB account (set as public) so to download & to run...
   $ git clone https://github.com/kwokwaitang/waracle-cake-manager.git
   $ mvn spring-boot:run
@@ -25,9 +25,22 @@ This version...
     POST /new-cake-details
 
   > By accessing an alternative endpoint (/cakes) with an appropriate client it must be possible to download a list of the cakes currently in the system as JSON data.
-  > The /cakes endpoint must also allow new cakes to be created.
     GET /cakes
+
+  > The /cakes endpoint must also allow new cakes to be created.
     POST /cakes
+
+    You can set-up the JSON for the POST using your favourite REST-API Client (Insomnia, Postman etc) or use Intelli and its Endpoints feature
+    ###
+    POST http://localhost:8080/cakes
+    Content-Type: application/json
+
+    {
+      "title" : "The Biscoff Cake",
+      "description" : "Vanilla sponge topped with Lotus biscuits",
+      "imageUrl" : "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"
+    }
+
 - For basic styling, I used BootStrap v4.6 with Thymeleaf as the main view templating engine.
 - There are some unit tests covering the controllers and service components
 
