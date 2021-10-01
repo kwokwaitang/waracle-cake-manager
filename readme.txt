@@ -43,6 +43,7 @@ This version...
 
 - For basic styling, I used BootStrap v4.6 with Thymeleaf as the main view templating engine.
 - There are some unit tests covering the controllers and service components
+- If I were to use MySQL for persistent storage, that would be off a Docker container
 
 
 
