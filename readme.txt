@@ -1,0 +1,37 @@
+My notes
+--------
+
+I had a brief look at the original Cake Manager, just some observations:
+- 404 isssed with http://localhost:8282/cakes but you do get "Hello World!" with http://localhost:8282/
+- Application based on JSP and Servlet technology with Hibernate (a bit of an "overkill" for the task at hand) to handle the back-end
+- Wrong column names in CakeEntity.java
+- No Unit tests
+
+This version...
+- I'll add the JWT token today and over the weekend in a separate GIT branch but for the now, the "main" branch deals with the requirements and some unit tests
+- SpringBoot (v2.5.5) is used and developed on Intellij IDEA Ultimate edition
+- Runs of Java 11 but 8 should be fine as well
+- I tend to use the H2 Embedded database for "dev" work (which is accessible ob the browser via /h2-console)
+- I've placed the project on my own GITHUB account (set as public) so to download & to run...
+  $ git clone https://github.com/kwokwaitang/waracle-cake-manager.git
+  $ mvn spring-boot:run
+- Instead of littering the source code with log outputs, I tend to use some AOP and apply it where necessary
+- The requirements I have covered as I have interpreted them...
+  > By accessing the root of the server (/) it should be possible to list the cakes currently in the system. This must be presented in an acceptable format for a human to read.
+    GET /
+
+  > It must be possible for a human to add a new cake to the server.
+    GET /new-cake-details
+    POST /new-cake-details
+
+  > By accessing an alternative endpoint (/cakes) with an appropriate client it must be possible to download a list of the cakes currently in the system as JSON data.
+  > The /cakes endpoint must also allow new cakes to be created.
+    GET /cakes
+    POST /cakes
+- For basic styling, I used BootStrap v4.6 with Thymeleaf as the main view templating engine.
+- There are some unit tests covering the controllers and service components
+
+
+
+
+

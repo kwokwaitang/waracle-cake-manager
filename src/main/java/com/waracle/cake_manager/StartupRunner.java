@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -36,8 +37,8 @@ public class StartupRunner implements CommandLineRunner {
     private final HttpClient httpClient;
 
     public StartupRunner(CakeRepository cakeRepository, HttpClient httpClient) {
-        this.cakeRepository = cakeRepository;
-        this.httpClient = httpClient;
+        this.cakeRepository = Objects.requireNonNull(cakeRepository, () -> "Missing a cake service");
+        this.httpClient = Objects.requireNonNull(httpClient, () -> "Missing an HTTP client");
     }
 
     @LogMethodAccess
