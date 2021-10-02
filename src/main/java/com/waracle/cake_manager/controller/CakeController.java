@@ -46,7 +46,7 @@ public class CakeController {
     @LogMethodAccess
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("cakes", cakeService.getAvailableCakes());
+        model.addAttribute("cakes", cakeService.getAvailableCakesViaRestApi());
 
         return "index";
     }
@@ -89,10 +89,14 @@ public class CakeController {
             onSubmitMsg = () -> String.format("\tNew cake details are fine [%s]", newCakeDetails);
 
             NewCakeRequest newCakeRequest = cakeService.getNewCakeRequest(newCakeDetails);
-            NewCakeResponse newCakeResponse = cakeService.addCake(newCakeRequest);
+            NewCakeResponse newCakeResponse = cakeService.addCakeViaRestApi(newCakeRequest);
             LOGGER.info(() -> String.format("\tResponse is [%s]", newCakeResponse));
 
-            view = "successfully-added-cake";
+            if (newCakeResponse.getId() != null) {
+                view = "successfully-added-cake";
+            } else {
+                view = "unsuccessfully-added-cake";
+            }
         }
 
         LOGGER.info(onSubmitMsg);

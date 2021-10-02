@@ -46,6 +46,10 @@ This version...
 - If I were to use MySQL for persistent storage, that would be off a Docker container
 
 
+https://stackoverflow.com/questions/25010390/dynamic-chaining-thenreturn-in-mockito
+https://stackoverflow.com/questions/14845690/mockito-invaliduseofmatchersexception
+
+
 
 
 

@@ -6,6 +6,7 @@ import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.model.NewCakeRequest;
 import com.waracle.cake_manager.model.NewCakeResponse;
 import com.waracle.cake_manager.repository.CakeRepository;
+import org.apache.http.client.HttpClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -27,6 +28,9 @@ class CakeServiceImplTest {
     ModelMapper modelMapper = new ModelMapper();
 
     @Mock
+    HttpClient httpClient;
+
+    @Mock
     CakeRepository cakeRepository;
 
     CakeServiceImpl serviceImplUnderTest;
@@ -34,7 +38,7 @@ class CakeServiceImplTest {
     @BeforeEach
     public void setup() throws Exception {
         MockitoAnnotations.openMocks(this);
-        serviceImplUnderTest = new CakeServiceImpl(modelMapper, cakeRepository);
+        serviceImplUnderTest = new CakeServiceImpl(modelMapper, httpClient, cakeRepository);
     }
 
     @Test
