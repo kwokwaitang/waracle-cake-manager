@@ -9,7 +9,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-class CakeErrorController implements ErrorController {
+public class CakeErrorController implements ErrorController {
 
     @GetMapping("/error")
     public String error(HttpServletRequest request) {
