@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-100">
 <head>
     <meta charset="UTF-8">
-    <title>New cake details</title>
+    <title>Oops... Something has gone wrong!!!</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"/>
@@ -16,12 +16,8 @@
 <body>
     <main role="main" class="flex-shrink-0">
         <div class="container">
-            <h1>New cake details</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-
-            <form action="#" th:action="@{/new-cake-details}" th:object="${newCakeDetails}" method="post">
-                <div id="form" th:insert="~{fragments/new-cake-details-form :: __${formFragment}__}"></div>
-            </form>
+            <h1>Sorry, something has gone wrong!!!</h1>
+            <a href="/">Return to home</a>
         </div>
     </main>
 

@@ -17,4 +17,11 @@ public class NewCakeResponse {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "NewCakeResponse{" +
+                "id=" + id +
+                '}';
+    }
 }

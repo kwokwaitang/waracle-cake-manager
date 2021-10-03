@@ -1,6 +1,9 @@
 package com.waracle.cake_manager.controller;
 
 import com.waracle.cake_manager.dto.CakeDto;
+import com.waracle.cake_manager.form.NewCakeDetails;
+import com.waracle.cake_manager.model.NewCakeRequest;
+import com.waracle.cake_manager.model.NewCakeResponse;
 import com.waracle.cake_manager.service.CakeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.iterableWithSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -51,7 +55,7 @@ class CakeControllerTest {
 
         List<CakeDto> cakes = new ArrayList<>(Arrays.asList(cakeDto1));
 
-        when(cakeService.getAvailableCakes()).thenReturn(cakes);
+        when(cakeService.getAvailableCakesViaRestApi()).thenReturn(cakes);
 
         mvc.perform(get("/"))
                 .andExpect(model().attribute("cakes", iterableWithSize((equalTo(1)))))
@@ -67,7 +71,10 @@ class CakeControllerTest {
     }
 
     @Test
-    void onSubmit_withNoErrors() throws Exception {
+    void onSubmit_withNoErrorsSuccessfullyAddedCake() throws Exception {
+        when(cakeService.getNewCakeRequest(any(NewCakeDetails.class))).thenReturn(new NewCakeRequest());
+        when(cakeService.addCakeViaRestApi(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(88L));
+
         mvc.perform(post("/new-cake-details")
                 .param("title", "The Biscoff Cake")
                 .param("description", "Vanilla sponge topped with Lotus biscuits")

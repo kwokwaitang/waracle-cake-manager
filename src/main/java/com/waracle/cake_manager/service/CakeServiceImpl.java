@@ -1,5 +1,7 @@
 package com.waracle.cake_manager.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
@@ -7,9 +9,19 @@ import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.model.NewCakeRequest;
 import com.waracle.cake_manager.model.NewCakeResponse;
 import com.waracle.cake_manager.repository.CakeRepository;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -20,13 +32,17 @@ import java.util.stream.Collectors;
 public class CakeServiceImpl implements CakeService {
 
     private static final Logger LOGGER = Logger.getGlobal();
+    private static final String CAKES_URL = "http://localhost:8080/cakes";
 
     private final ModelMapper modelMapper;
 
+    private final HttpClient httpClient;
+
     private final CakeRepository cakeRepository;
 
-    public CakeServiceImpl(ModelMapper modelMapper, CakeRepository cakeRepository) {
+    public CakeServiceImpl(ModelMapper modelMapper, HttpClient httpClient, CakeRepository cakeRepository) {
         this.modelMapper = Objects.requireNonNull(modelMapper, () -> "Missing a model mapper");
+        this.httpClient = Objects.requireNonNull(httpClient, () -> "Missing an HTTP Client");
         this.cakeRepository = Objects.requireNonNull(cakeRepository, () -> "Missing a cake repository");
     }
 
@@ -42,11 +58,56 @@ public class CakeServiceImpl implements CakeService {
 
     @LogMethodAccess
     @Override
+    public List<CakeDto> getAvailableCakesViaRestApi() {
+        HttpGet request = new HttpGet(CAKES_URL);
+        try {
+            HttpResponse response = httpClient.execute(request);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                String jsonCakeData = EntityUtils.toString(entity);
+                ObjectMapper objectMapper = new ObjectMapper();
+
+                return objectMapper.readValue(jsonCakeData, new TypeReference<List<CakeDto>>() {});
+            }
+        } catch (IOException e) {
+            LOGGER.warning(() -> String.format("Problem encountered whilst fetching cakes from REST API [%s]",
+                    ExceptionUtils.getStackTrace(e)));
+        }
+
+        return Collections.emptyList();
+    }
+
+    @LogMethodAccess
+    @Override
     public NewCakeResponse addCake(NewCakeRequest newCakeRequest) {
         Cake cake = cakeRepository.save(modelMapper.map(newCakeRequest, Cake.class));
         LOGGER.info(() -> String.format("\tSaved cake is [%s]", cake));
 
         return new NewCakeResponse(cake.getEmployeeId());
+    }
+
+    @LogMethodAccess
+    @Override
+    public NewCakeResponse addCakeViaRestApi(NewCakeRequest newCakeRequest) {
+        HttpPost request = new HttpPost(CAKES_URL);
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            StringEntity requestEntity = new StringEntity(objectMapper.writeValueAsString(newCakeRequest),
+                    ContentType.APPLICATION_JSON);
+            request.setEntity(requestEntity);
+            HttpResponse response = httpClient.execute(request);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                String jsonCakeData = EntityUtils.toString(entity);
+                return objectMapper.readValue(jsonCakeData, NewCakeResponse.class);
+            }
+        } catch (IOException e) {
+            LOGGER.warning(() -> String.format("Problem encountered whilst saving a cake via a REST API [%s]",
+                    ExceptionUtils.getStackTrace(e)));
+        }
+
+        return new NewCakeResponse();
     }
 
     @Override
