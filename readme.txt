@@ -16,40 +16,30 @@ This version...
   $ git clone https://github.com/kwokwaitang/waracle-cake-manager.git
   $ mvn spring-boot:run
 - Instead of littering the source code with log outputs, I tend to use some AOP and apply it where necessary
-- The requirements I have covered as I have interpreted them...
-  > By accessing the root of the server (/) it should be possible to list the cakes currently in the system. This must be presented in an acceptable format for a human to read.
-    GET /
-
-  > It must be possible for a human to add a new cake to the server.
-    GET /new-cake-details
-    POST /new-cake-details
-
-  > By accessing an alternative endpoint (/cakes) with an appropriate client it must be possible to download a list of the cakes currently in the system as JSON data.
-    GET /cakes
-
-  > The /cakes endpoint must also allow new cakes to be created.
-    POST /cakes
-
-    You can set-up the JSON for the POST using your favourite REST-API Client (Insomnia, Postman etc) or use Intelli and its Endpoints feature
-    ###
-    POST http://localhost:8080/cakes
-    Content-Type: application/json
-
-    {
-      "title" : "The Biscoff Cake",
-      "description" : "Vanilla sponge topped with Lotus biscuits",
-      "imageUrl" : "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"
-    }
-
-- For basic styling, I used BootStrap v4.6 with Thymeleaf as the main view templating engine.
+- For basic styling, I used BootStrap v4.6 (via webjars) with Thymeleaf as the main view templating engine.
 - There are some unit tests covering the controllers and service components
 - If I were to use MySQL for persistent storage, that would be off a Docker container
 
+JWT branch
+----------
 
-https://stackoverflow.com/questions/25010390/dynamic-chaining-thenreturn-in-mockito
-https://stackoverflow.com/questions/14845690/mockito-invaliduseofmatchersexception
+I've tackled the "Authentication via OAUTH2" as a separate branch as I wasn't too sure if I should set it using GITHUB as
+the authorisation server or to have it as a localised set-up, so I opted for the latter.
 
+What I've done is based on this article...
+https://www.javainuse.com/spring/boot-jwt
 
+To test, I used Insomnia as my REST API Client (but you can use POSTMAN etc.) and the key steps are...
+[1] Register a username and password (up to you to alter the JSON)
+[2] Authenticate the same username and password to receive a JWT
+[3] Use the JWT in all further interactions by changing the value of the Authorization header with the received JWT in the format "Bearer <JWT>"
 
+I have included the Insomnia tests (see Insomnia_2021-10-04.json)
+
+The only caveat in this set-up is that the username must be "user", as I made a choice to make the CakeController to use
+the following calls to the CakeService; getAvailableCakesViaRestApi() and addCakeViaRestApi() instead of getAvailableCakes()
+and addCake() as an interpretation of "Would be good to change the application to implement proper client-server separation via REST API"
+
+Both getAvailableCakesViaRestApi() and addCakeViaRestApi() will make HTTP requests to the CakeRestApiController
 
 
