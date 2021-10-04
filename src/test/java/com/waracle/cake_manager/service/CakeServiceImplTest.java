@@ -5,14 +5,31 @@ import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.model.NewCakeRequest;
 import com.waracle.cake_manager.model.NewCakeResponse;
+import com.waracle.cake_manager.model.UserDao;
 import com.waracle.cake_manager.repository.CakeRepository;
+import com.waracle.cake_manager.repository.UserRepository;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +37,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class CakeServiceImplTest {
@@ -33,12 +51,15 @@ class CakeServiceImplTest {
     @Mock
     CakeRepository cakeRepository;
 
+    @Mock
+    UserRepository userRepository;
+
     CakeServiceImpl serviceImplUnderTest;
 
     @BeforeEach
     public void setup() throws Exception {
         MockitoAnnotations.openMocks(this);
-        serviceImplUnderTest = new CakeServiceImpl(modelMapper, httpClient, cakeRepository);
+        serviceImplUnderTest = new CakeServiceImpl(modelMapper, httpClient, cakeRepository, userRepository);
     }
 
     @Test
@@ -81,6 +102,11 @@ class CakeServiceImplTest {
     }
 
     @Test
+    void getAvailableCakesViaRestApi_withCakes() throws Exception {
+        // TODO
+    }
+
+    @Test
     void getAvailableCakes_withNoCakes() {
         when(cakeRepository.findAll()).thenReturn(Collections.emptyList());
 
@@ -107,6 +133,11 @@ class CakeServiceImplTest {
         NewCakeResponse newCakeResponse = serviceImplUnderTest.addCake(newCakeRequest);
 
         assertEquals(21L, newCakeResponse.getId());
+    }
+
+    @Test
+    void addCakeViaRestApi() throws Exception {
+        // TODO
     }
 
     @Test

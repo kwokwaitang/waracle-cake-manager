@@ -9,6 +9,8 @@ public class NewCakeRequest {
 
     private String imageUrl;
 
+    private String token;
+
     public String getTitle() {
         return title;
     }

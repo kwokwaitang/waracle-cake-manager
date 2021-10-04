@@ -9,6 +9,7 @@ import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.model.NewCakeRequest;
 import com.waracle.cake_manager.model.NewCakeResponse;
 import com.waracle.cake_manager.repository.CakeRepository;
+import com.waracle.cake_manager.repository.UserRepository;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -40,10 +41,14 @@ public class CakeServiceImpl implements CakeService {
 
     private final CakeRepository cakeRepository;
 
-    public CakeServiceImpl(ModelMapper modelMapper, HttpClient httpClient, CakeRepository cakeRepository) {
+    private final UserRepository userRepository;
+
+    public CakeServiceImpl(ModelMapper modelMapper, HttpClient httpClient, CakeRepository cakeRepository,
+                           UserRepository userRepository) {
         this.modelMapper = Objects.requireNonNull(modelMapper, () -> "Missing a model mapper");
         this.httpClient = Objects.requireNonNull(httpClient, () -> "Missing an HTTP Client");
         this.cakeRepository = Objects.requireNonNull(cakeRepository, () -> "Missing a cake repository");
+        this.userRepository = Objects.requireNonNull(userRepository, () -> "Missing a user repository");
     }
 
     @Override
@@ -60,6 +65,8 @@ public class CakeServiceImpl implements CakeService {
     @Override
     public List<CakeDto> getAvailableCakesViaRestApi() {
         HttpGet request = new HttpGet(CAKES_URL);
+        request.addHeader("Authorization", "Bearer " + userRepository.findByUsername("user").getToken());
+
         try {
             HttpResponse response = httpClient.execute(request);
             HttpEntity entity = response.getEntity();
@@ -90,6 +97,7 @@ public class CakeServiceImpl implements CakeService {
     @Override
     public NewCakeResponse addCakeViaRestApi(NewCakeRequest newCakeRequest) {
         HttpPost request = new HttpPost(CAKES_URL);
+        request.addHeader("Authorization", "Bearer " + userRepository.findByUsername("user").getToken());
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();

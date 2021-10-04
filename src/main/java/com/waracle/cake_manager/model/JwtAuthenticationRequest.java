@@ -1,17 +1,19 @@
 package com.waracle.cake_manager.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-public class JwtRequest implements Serializable {
+public class JwtAuthenticationRequest implements Serializable {
+
     private String username;
     private String password;
 
-    public JwtRequest() {
+    public JwtAuthenticationRequest() {
     }
 
-    public JwtRequest(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public JwtAuthenticationRequest(String username, String password) {
+        this.username = Objects.requireNonNull(username, () -> "Missing a username");
+        this.password = Objects.requireNonNull(password, () -> "Missing a password");
     }
 
     public String getUsername() {
