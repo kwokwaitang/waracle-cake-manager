@@ -1,5 +1,6 @@
 package com.waracle.cake_manager.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cake_manager.advice.LogMethodAccess;
@@ -10,6 +11,7 @@ import com.waracle.cake_manager.model.NewCakeRequest;
 import com.waracle.cake_manager.model.NewCakeResponse;
 import com.waracle.cake_manager.repository.CakeRepository;
 import com.waracle.cake_manager.repository.UserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -64,6 +66,22 @@ public class CakeServiceImpl implements CakeService {
     @LogMethodAccess
     @Override
     public List<CakeDto> getAvailableCakesViaRestApi() {
+        List<CakeDto> availableCakes = Collections.emptyList();
+        
+        String jsonCakeData = fetchJsonCakeData();
+        if (StringUtils.isNotBlank(jsonCakeData)) {
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                availableCakes = objectMapper.readValue(fetchJsonCakeData(), new TypeReference<List<CakeDto>>() {});
+            } catch (JsonProcessingException e) {
+                LOGGER.warning(() -> String.format("Problem encountered whilst processing the fetched JSON cake data [%s]", ExceptionUtils.getStackTrace(e)));
+            }
+        }
+
+        return availableCakes;
+    }
+
+    private String fetchJsonCakeData() {
         HttpGet request = new HttpGet(CAKES_URL);
         request.addHeader("Authorization", "Bearer " + userRepository.findByUsername("user").getToken());
 
@@ -71,17 +89,14 @@ public class CakeServiceImpl implements CakeService {
             HttpResponse response = httpClient.execute(request);
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                String jsonCakeData = EntityUtils.toString(entity);
-                ObjectMapper objectMapper = new ObjectMapper();
-
-                return objectMapper.readValue(jsonCakeData, new TypeReference<List<CakeDto>>() {});
+                return EntityUtils.toString(entity);
             }
         } catch (IOException e) {
             LOGGER.warning(() -> String.format("Problem encountered whilst fetching cakes from REST API [%s]",
                     ExceptionUtils.getStackTrace(e)));
         }
 
-        return Collections.emptyList();
+        return "";
     }
 
     @LogMethodAccess

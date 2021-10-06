@@ -7,13 +7,9 @@ import com.waracle.cake_manager.model.JwtAuthenticationResponse;
 import com.waracle.cake_manager.model.UserDao;
 import com.waracle.cake_manager.model.UserDto;
 import com.waracle.cake_manager.service.JwtUserDetailsService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,8 +42,8 @@ public class JwtAuthenticationController {
      * @return
      */
     @LogMethodAccess
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) {
+    @PostMapping(value = "/authenticate")
+    public ResponseEntity<JwtAuthenticationResponse> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) {
         try {
             // Initiate authentication...
             final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
@@ -77,8 +73,8 @@ public class JwtAuthenticationController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
+    @PostMapping(value = "/register")
+    public ResponseEntity<UserDao> saveUser(@RequestBody UserDto user) {
         return ResponseEntity.ok(userDetailsService.save(user));
     }
 }

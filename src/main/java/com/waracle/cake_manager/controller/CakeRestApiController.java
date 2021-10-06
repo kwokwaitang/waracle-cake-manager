@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 /**
  * {@link org.springframework.web.bind.annotation.RestController} represents both {@link
@@ -23,8 +22,6 @@ import java.util.logging.Logger;
  */
 @RestController
 public class CakeRestApiController {
-
-    private static final Logger LOGGER = Logger.getGlobal();
 
     private final CakeService cakeService;
 

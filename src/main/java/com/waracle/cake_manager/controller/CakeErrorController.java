@@ -1,5 +1,6 @@
 package com.waracle.cake_manager.controller;
 
+import com.waracle.cake_manager.exception.DeliberateException;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class CakeErrorController implements ErrorController {
     }
 
     @GetMapping("/throw-an-exception")
-    public String exceptionHandling() throws Exception {
-        throw new Exception("Deliberately throwing an exception");
+    public String exceptionHandling() {
+        throw new DeliberateException("Deliberately throwing an exception");
     }
 }

@@ -10,6 +10,9 @@ import org.springframework.validation.Validator;
  * Set-up any relevant validation checks when the form is submitted
  */
 public class NewCakeDetailsFormValidator implements Validator {
+
+    public static final String IMAGE = "image";
+
     @Override
     public boolean supports(Class<?> clazz) {
         return NewCakeDetails.class.equals(clazz);
@@ -21,13 +24,11 @@ public class NewCakeDetailsFormValidator implements Validator {
             NewCakeDetails newSiteDetails = (NewCakeDetails) target;
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "error.title.missing");
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.description.missing");
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "image", "error.image.missing");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, IMAGE, "error.image.missing");
 
             // Perform any other additional checks on the captured form data but only if there is something present...
-            if (!errors.hasFieldErrors("image")) {
-                if (!imageStartsWithHttp(newSiteDetails.getImage())) {
-                    errors.rejectValue("image", "error.image.wrong-format");
-                }
+            if (!errors.hasFieldErrors(IMAGE) && !imageStartsWithHttp(newSiteDetails.getImage())) {
+                errors.rejectValue(IMAGE, "error.image.wrong-format");
             }
         }
     }

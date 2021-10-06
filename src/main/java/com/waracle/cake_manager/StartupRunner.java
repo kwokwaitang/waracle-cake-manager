@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
-import com.waracle.cake_manager.dto.Cakes;
 import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.repository.CakeRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -73,8 +72,6 @@ public class StartupRunner implements CommandLineRunner {
         if (entity != null) {
             jsonCakeData = EntityUtils.toString(entity);
         }
-
-        LOGGER.info(String.format("\tJSON cake data is %s", jsonCakeData));
 
         return jsonCakeData;
     }
