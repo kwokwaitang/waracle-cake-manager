@@ -27,15 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtRequestFilter jwtRequestFilter;
 
-    private final PasswordEncoder bcryptEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public WebSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
                              UserDetailsService jwtUserDetailsService, JwtRequestFilter jwtRequestFilter,
-                             PasswordEncoder bcryptEncoder) {
+                             PasswordEncoder passwordEncoder) {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtUserDetailsService = jwtUserDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
-        this.bcryptEncoder = bcryptEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(bcryptEncoder);
+        authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Bean

@@ -20,11 +20,11 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder bcryptEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public JwtUserDetailsService(UserRepository userRepository, PasswordEncoder bcryptEncoder) {
+    public JwtUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.bcryptEncoder = bcryptEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -54,7 +54,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDao save(final UserDto user) {
         UserDao newUser = new UserDao();
         newUser.setUsername(user.getUsername());
-        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(newUser);
     }
