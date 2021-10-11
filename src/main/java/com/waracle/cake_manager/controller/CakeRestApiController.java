@@ -60,7 +60,6 @@ public class CakeRestApiController {
     @LogMethodAccess
     @PostMapping("/cakes")
     public ResponseEntity<NewCakeResponse> newCakeDetails(@RequestBody NewCakeRequest newCakeRequest) {
-        // TODO add validation checks on the received JSON
         return ResponseEntity.ok(cakeService.addCake(newCakeRequest));
     }
 }

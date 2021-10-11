@@ -2,7 +2,6 @@ package com.waracle.cake_manager.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.repository.CakeRepository;

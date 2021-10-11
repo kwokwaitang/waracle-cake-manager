@@ -86,9 +86,9 @@ class StartupRunnerServiceImplTest {
 
         List<Cake> actual = serviceImplUnderTest.saveCakeData(cakeDtos);
         assertEquals(1, actual.size());
-        assertTrue(actual.get(0).getTitle().equals(cake.getTitle()));
-        assertTrue(actual.get(0).getDescription().equals(cake.getDescription()));
-        assertTrue(actual.get(0).getImageUrl().equals(cake.getImageUrl()));
+        assertEquals(cake.getTitle(), actual.get(0).getTitle());
+        assertEquals(cake.getDescription(), actual.get(0).getDescription());
+        assertEquals(cake.getImageUrl(), actual.get(0).getImageUrl());
 
         verify(cakeRepository, times(1)).saveAll(anyList());
     }
