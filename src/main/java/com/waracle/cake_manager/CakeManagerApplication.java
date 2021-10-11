@@ -5,19 +5,29 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.logging.Logger;
 
 @SpringBootApplication
 public class CakeManagerApplication {
 
+    private static final Logger LOGGER = Logger.getGlobal();
+
     /**
      * Timeout in 30 seconds
      */
-    private static final int TIMEOUT = 30 * 1000;
+    private static final int TIMEOUT;
+
+    static {
+        TIMEOUT = 30 * 1000;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(CakeManagerApplication.class, args);
@@ -63,5 +73,21 @@ public class CakeManagerApplication {
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
 
         return modelMapper;
+    }
+
+    @Bean
+    @Order(2)
+    public CommandLineRunner AnotherCommandLineRunnerSetupAsBean() {
+        return (args) -> {
+            LOGGER.info("Bean implementation of the CommandLineRunner...");
+
+            if (args.length > 0) {
+                for (String arg : args) {
+                    LOGGER.info(() -> String.format("\tFound argument %s", arg));
+                }
+            } else {
+                LOGGER.info("\tNo arguments...");
+            }
+        };
     }
 }
