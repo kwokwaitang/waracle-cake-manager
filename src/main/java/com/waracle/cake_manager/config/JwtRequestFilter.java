@@ -1,5 +1,6 @@
 package com.waracle.cake_manager.config;
 
+import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.commons.lang3.StringUtils;

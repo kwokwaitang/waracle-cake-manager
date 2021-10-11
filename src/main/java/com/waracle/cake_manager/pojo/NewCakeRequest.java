@@ -1,4 +1,4 @@
-package com.waracle.cake_manager.model;
+package com.waracle.cake_manager.pojo;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 

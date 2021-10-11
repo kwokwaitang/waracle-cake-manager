@@ -7,8 +7,8 @@ import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.model.Cake;
-import com.waracle.cake_manager.model.NewCakeRequest;
-import com.waracle.cake_manager.model.NewCakeResponse;
+import com.waracle.cake_manager.pojo.NewCakeRequest;
+import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.repository.CakeRepository;
 import com.waracle.cake_manager.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -63,18 +63,33 @@ public class CakeServiceImpl implements CakeService {
         return Collections.emptyList();
     }
 
+    @Override
+    public List<CakeDto> getCarrotCakes() {
+        List<Cake> cakes = (List<Cake>) cakeRepository.findAll();
+
+        List<Cake> carrotCakes = cakes.stream()
+                .filter(cake -> cake.getTitle().toLowerCase().startsWith("carrot"))
+                .collect(Collectors.toList());
+        if (!carrotCakes.isEmpty()) {
+            return mapList(carrotCakes, CakeDto.class);
+        }
+
+        return Collections.emptyList();
+    }
+
     @LogMethodAccess
     @Override
     public List<CakeDto> getAvailableCakesViaRestApi() {
         List<CakeDto> availableCakes = Collections.emptyList();
-        
+
         String jsonCakeData = fetchJsonCakeData();
         if (StringUtils.isNotBlank(jsonCakeData)) {
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 availableCakes = objectMapper.readValue(fetchJsonCakeData(), new TypeReference<List<CakeDto>>() {});
             } catch (JsonProcessingException e) {
-                LOGGER.warning(() -> String.format("Problem encountered whilst processing the fetched JSON cake data [%s]", ExceptionUtils.getStackTrace(e)));
+                LOGGER.warning(() -> String.format("Problem encountered whilst processing the fetched JSON cake data " +
+                        "[%s]", ExceptionUtils.getStackTrace(e)));
             }
         }
 
@@ -155,8 +170,7 @@ public class CakeServiceImpl implements CakeService {
      * @return The equivalent list of DTO objects
      */
     private <S, T> List<T> mapList(List<S> listOfEntities, Class<T> targetDtoClass) {
-        return listOfEntities
-                .stream()
+        return listOfEntities.stream()
                 .map(element -> modelMapper.map(element, targetDtoClass))
                 .collect(Collectors.toList());
     }

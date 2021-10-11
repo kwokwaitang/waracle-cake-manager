@@ -3,8 +3,8 @@ package com.waracle.cake_manager.controller;
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.form.validator.NewCakeDetailsFormValidator;
-import com.waracle.cake_manager.model.NewCakeRequest;
-import com.waracle.cake_manager.model.NewCakeResponse;
+import com.waracle.cake_manager.pojo.NewCakeRequest;
+import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.service.CakeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +47,13 @@ public class CakeController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("cakes", cakeService.getAvailableCakesViaRestApi());
+
+        return "index";
+    }
+
+    @GetMapping("/carrot-cakes")
+    public String carrotCakeOnly(Model model) {
+        model.addAttribute("cakes", cakeService.getCarrotCakes());
 
         return "index";
     }

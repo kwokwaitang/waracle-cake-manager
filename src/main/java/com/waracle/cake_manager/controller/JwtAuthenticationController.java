@@ -2,8 +2,8 @@ package com.waracle.cake_manager.controller;
 
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.config.JwtTokenUtil;
-import com.waracle.cake_manager.model.JwtAuthenticationRequest;
-import com.waracle.cake_manager.model.JwtAuthenticationResponse;
+import com.waracle.cake_manager.pojo.JwtAuthenticationRequest;
+import com.waracle.cake_manager.pojo.JwtAuthenticationResponse;
 import com.waracle.cake_manager.model.UserDao;
 import com.waracle.cake_manager.model.UserDto;
 import com.waracle.cake_manager.service.JwtUserDetailsService;

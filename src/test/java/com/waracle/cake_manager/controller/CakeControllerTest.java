@@ -1,10 +1,12 @@
 package com.waracle.cake_manager.controller;
 
+import com.waracle.cake_manager.StartupRunner;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
-import com.waracle.cake_manager.model.NewCakeRequest;
-import com.waracle.cake_manager.model.NewCakeResponse;
+import com.waracle.cake_manager.pojo.NewCakeRequest;
+import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.service.CakeService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.iterableWithSize;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,6 +49,18 @@ class CakeControllerTest {
     }
 
     @Test
+    void constructorWithMissingCakeService() {
+        Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            new CakeController(null);
+        });
+
+        String expectedMessage = "Missing a cake service";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     void index() throws Exception {
         CakeDto cakeDto1 = new CakeDto();
         cakeDto1.setEmployeeId(1L);
@@ -64,6 +79,11 @@ class CakeControllerTest {
     }
 
     @Test
+    void carrotCakeOnly() throws Exception {
+        throw new RuntimeException("To be implemented");
+    }
+
+    @Test
     void captureNewCakeDetails() throws Exception {
         mvc.perform(get("/new-cake-details"))
                 .andExpect(status().isOk())
@@ -71,7 +91,7 @@ class CakeControllerTest {
     }
 
     @Test
-    void onSubmit_withNoErrorsSuccessfullyAddedCake() throws Exception {
+    void onSubmit_withNoErrors_SuccessfullyAddedCake() throws Exception {
         when(cakeService.getNewCakeRequest(any(NewCakeDetails.class))).thenReturn(new NewCakeRequest());
         when(cakeService.addCakeViaRestApi(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(88L));
 
@@ -81,6 +101,19 @@ class CakeControllerTest {
                 .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("successfully-added-cake"));
+    }
+
+    @Test
+    void onSubmit_withNoErrors_UnsuccessfullyAddedCake() throws Exception {
+        when(cakeService.getNewCakeRequest(any(NewCakeDetails.class))).thenReturn(new NewCakeRequest());
+        when(cakeService.addCakeViaRestApi(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(null));
+
+        mvc.perform(post("/new-cake-details")
+                        .param("title", "The Biscoff Cake")
+                        .param("description", "Vanilla sponge topped with Lotus biscuits")
+                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("unsuccessfully-added-cake"));
     }
 
     @Test

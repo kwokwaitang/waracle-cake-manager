@@ -1,35 +1,21 @@
 package com.waracle.cake_manager.service;
 
+import com.waracle.cake_manager.StartupRunner;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.model.Cake;
-import com.waracle.cake_manager.model.NewCakeRequest;
-import com.waracle.cake_manager.model.NewCakeResponse;
-import com.waracle.cake_manager.model.UserDao;
+import com.waracle.cake_manager.pojo.NewCakeRequest;
+import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.repository.CakeRepository;
 import com.waracle.cake_manager.repository.UserRepository;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHttpResponse;
-import org.apache.http.util.EntityUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -60,6 +46,54 @@ class CakeServiceImplTest {
     public void setup() throws Exception {
         MockitoAnnotations.openMocks(this);
         serviceImplUnderTest = new CakeServiceImpl(modelMapper, httpClient, cakeRepository, userRepository);
+    }
+
+    @Test
+    void constructorWithMissingModelMapper() {
+        Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            new CakeServiceImpl(null, httpClient, cakeRepository, userRepository);
+        });
+
+        String expectedMessage = "Missing a model mapper";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void constructorWithMissingHttpClient() {
+        Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            new CakeServiceImpl(modelMapper, null, cakeRepository, userRepository);
+        });
+
+        String expectedMessage = "Missing an HTTP Client";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void constructorWithMissingCakeRepository() {
+        Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            new CakeServiceImpl(modelMapper, httpClient, null, userRepository);
+        });
+
+        String expectedMessage = "Missing a cake repository";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void constructorWithMissingUserRepository() {
+        Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            new CakeServiceImpl(modelMapper, httpClient, cakeRepository, null);
+        });
+
+        String expectedMessage = "Missing a user repository";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
