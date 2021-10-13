@@ -1,6 +1,5 @@
 package com.waracle.cake_manager.config;
 
-import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        LOGGER.info(">>> Running doFilterInternal()");
+        LOGGER.info(">>> Running JwtRequestFilter::doFilterInternal()");
         LOGGER.info(String.format("\trequest = [%s]", request));
         LOGGER.info(String.format("\trequest.getRequestURL() = [%s]", request.getRequestURL()));
         LOGGER.info(String.format("\trequest.getRequestURI() = [%s]", request.getRequestURI()));
@@ -100,6 +99,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     private boolean noAuthenticationAvailable() {
-        return SecurityContextHolder.getContext().getAuthentication() == null ? true : false;
+        return SecurityContextHolder.getContext().getAuthentication() == null;
     }
 }
