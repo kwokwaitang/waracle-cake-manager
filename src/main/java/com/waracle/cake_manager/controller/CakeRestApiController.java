@@ -2,8 +2,8 @@ package com.waracle.cake_manager.controller;
 
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
-import com.waracle.cake_manager.model.NewCakeRequest;
-import com.waracle.cake_manager.model.NewCakeResponse;
+import com.waracle.cake_manager.pojo.NewCakeRequest;
+import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.service.CakeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

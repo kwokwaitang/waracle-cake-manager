@@ -2,8 +2,8 @@ package com.waracle.cake_manager.service;
 
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
-import com.waracle.cake_manager.model.NewCakeRequest;
-import com.waracle.cake_manager.model.NewCakeResponse;
+import com.waracle.cake_manager.pojo.NewCakeRequest;
+import com.waracle.cake_manager.pojo.NewCakeResponse;
 
 import java.util.List;
 
