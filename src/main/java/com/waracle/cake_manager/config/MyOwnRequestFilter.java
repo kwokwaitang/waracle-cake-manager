@@ -22,12 +22,15 @@ public class MyOwnRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         LOGGER.info(">>> Running MyOwnRequestFilter::doFilterInternal()");
-        LOGGER.info(String.format("\trequest = [%s]", request));
-        LOGGER.info(String.format("\trequest.getRequestURL() = [%s]", request.getRequestURL()));
-        LOGGER.info(String.format("\trequest.getRequestURI() = [%s]", request.getRequestURI()));
+        LOGGER.info(() -> String.format("\trequest = [%s]", request));
+        LOGGER.info(() -> String.format("\trequest.getRequestURL() = [%s]", request.getRequestURL()));
+        LOGGER.info(() -> String.format("\trequest.getRequestURI() = [%s]", request.getRequestURI()));
 
         // Just want to see my own filter being invoked...
 
         filterChain.doFilter(request, response);
+
+        // https://stackoverflow.com/questions/41825431/spring-boot-response-filter
+        LOGGER.info(() -> String.format("\tresponse.getHeaderNames() = [%s]", response.getHeaderNames()));
     }
 }
