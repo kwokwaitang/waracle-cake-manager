@@ -55,7 +55,7 @@ class CakeControllerTest {
 
         List<CakeDto> cakes = new ArrayList<>(Arrays.asList(cakeDto1));
 
-        when(cakeService.getAvailableCakesViaRestApi()).thenReturn(cakes);
+        when(cakeService.getAvailableCakes()).thenReturn(cakes);
 
         mvc.perform(get("/"))
                 .andExpect(model().attribute("cakes", iterableWithSize((equalTo(1)))))
@@ -73,7 +73,7 @@ class CakeControllerTest {
     @Test
     void onSubmit_withNoErrorsSuccessfullyAddedCake() throws Exception {
         when(cakeService.getNewCakeRequest(any(NewCakeDetails.class))).thenReturn(new NewCakeRequest());
-        when(cakeService.addCakeViaRestApi(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(88L));
+        when(cakeService.addCake(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(88L));
 
         mvc.perform(post("/new-cake-details")
                 .param("title", "The Biscoff Cake")
