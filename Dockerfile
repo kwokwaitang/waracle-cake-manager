@@ -1,4 +1,4 @@
-# To build a Docker image with the Cake Manager application...
+# To build a Docker image with the Cake Manager application (main branch)...
 # docker build -t cake-manager:spring-boot-main-branch .
 
 # To run the application in its own container...
@@ -16,3 +16,5 @@ USER spring:spring
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} cake-manager.jar
 ENTRYPOINT ["java", "-jar", "/cake-manager.jar"]
+
+# https://spring.io/guides/gs/spring-boot-docker/
