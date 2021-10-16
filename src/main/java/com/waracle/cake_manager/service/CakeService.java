@@ -23,6 +23,13 @@ public interface CakeService {
     List<CakeDto> getCarrotCakes();
 
     /**
+     * Retrieve a list of cakes by name from a database
+     *
+     * @return List of cakes
+     */
+    List<CakeDto> getCakesByName(String name);
+
+    /**
      * Retrieve a list of available cakes from a REST API
      *
      * @return List of cakes

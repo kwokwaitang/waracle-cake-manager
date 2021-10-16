@@ -65,13 +65,18 @@ public class CakeServiceImpl implements CakeService {
 
     @Override
     public List<CakeDto> getCarrotCakes() {
+        return getCakesByName("carrot");
+    }
+
+    @Override
+    public List<CakeDto> getCakesByName(final String name) {
         List<Cake> cakes = (List<Cake>) cakeRepository.findAll();
 
-        List<Cake> carrotCakes = cakes.stream()
-                .filter(cake -> cake.getTitle().toLowerCase().startsWith("carrot"))
+        List<Cake> cakesByName = cakes.stream()
+                .filter(cake -> cake.getTitle().toLowerCase().contains(name))
                 .collect(Collectors.toList());
-        if (!carrotCakes.isEmpty()) {
-            return mapList(carrotCakes, CakeDto.class);
+        if (!cakesByName.isEmpty()) {
+            return mapList(cakesByName, CakeDto.class);
         }
 
         return Collections.emptyList();

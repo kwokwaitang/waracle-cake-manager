@@ -25,12 +25,15 @@
                     <th scope="col">Image</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="cake : ${cakes}">
-                    <td th:text="${cake.title}">N/A</td>
-                    <td th:text="${cake.description}">N/A</td>
-                    <td><img th:src="@{${cake.getImage()}}" alt="Media resource" style="width:100px; height:100px"></td>
-                </tr>
+                <tbody th:switch="${#lists.size(cakes)}">
+                    <tr th:case="'0'">
+                        <td colspan="3" class="col-3 text-center">No cakes available</td>
+                    </tr>
+                    <tr th:case="*" th:each="cake : ${cakes}">
+                        <td th:text="${cake.title}">N/A</td>
+                        <td th:text="${cake.description}">N/A</td>
+                        <td><img th:src="@{${cake.getImage()}}" alt="Media resource"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

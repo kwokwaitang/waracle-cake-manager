@@ -10,13 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
@@ -56,6 +54,17 @@ public class CakeController {
         model.addAttribute("cakes", cakeService.getCarrotCakes());
 
         return "index";
+    }
+
+    @GetMapping("/cakes-by-name/{name}")
+    public String carrotCakeOnly(Model model, @PathVariable(value = "name") Optional<String> name) {
+        if (name.isPresent()) {
+            model.addAttribute("cakes", cakeService.getCakesByName(name.get()));
+
+            return "index";
+        }
+
+        return "errors/error";
     }
 
     /**
