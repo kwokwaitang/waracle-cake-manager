@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     static final String[] REQUESTS_NOT_NEEDING_AUTHENTICATION = {"/authenticate", "/register", "/new" +
-            "-cake-details", "/webjars/**", "/index.css", "/h2-console/**" };
+            "-cake-details", "/webjars/**", "/index.css", "/h2-console/**"};
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 

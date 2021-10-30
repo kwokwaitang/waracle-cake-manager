@@ -3,8 +3,6 @@ package com.waracle.cake_manager.dto;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.persistence.Column;
-
 public class CakeDto {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

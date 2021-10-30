@@ -1,6 +1,5 @@
 package com.waracle.cake_manager.controller;
 
-import com.waracle.cake_manager.StartupRunner;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.pojo.NewCakeRequest;
@@ -8,6 +7,7 @@ import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.service.CakeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -66,7 +66,8 @@ class CakeControllerTest {
         cakeDto1.setEmployeeId(1L);
         cakeDto1.setTitle("The Biscoff Cake");
         cakeDto1.setDescription("Vanilla sponge topped with Lotus biscuits");
-        cakeDto1.setImage("https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203");
+        cakeDto1.setImage("https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1" +
+                ".jpg?v=1602446203");
 
         List<CakeDto> cakes = new ArrayList<>(Arrays.asList(cakeDto1));
 
@@ -79,11 +80,13 @@ class CakeControllerTest {
     }
 
     @Test
+    @DisplayName("Only carrot cake recipes")
     void carrotCakeOnly() throws Exception {
         throw new RuntimeException("To be implemented");
     }
 
     @Test
+    @DisplayName("Display form to capture cake details")
     void captureNewCakeDetails() throws Exception {
         mvc.perform(get("/new-cake-details"))
                 .andExpect(status().isOk())
@@ -91,14 +94,16 @@ class CakeControllerTest {
     }
 
     @Test
+    @DisplayName("Submit all required cake details")
     void onSubmit_withNoErrors_SuccessfullyAddedCake() throws Exception {
         when(cakeService.getNewCakeRequest(any(NewCakeDetails.class))).thenReturn(new NewCakeRequest());
         when(cakeService.addCakeViaRestApi(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(88L));
 
         mvc.perform(post("/new-cake-details")
-                .param("title", "The Biscoff Cake")
-                .param("description", "Vanilla sponge topped with Lotus biscuits")
-                .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
+                        .param("title", "The Biscoff Cake")
+                        .param("description", "Vanilla sponge topped with Lotus biscuits")
+                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full" +
+                                "-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("successfully-added-cake"));
     }
@@ -111,19 +116,22 @@ class CakeControllerTest {
         mvc.perform(post("/new-cake-details")
                         .param("title", "The Biscoff Cake")
                         .param("description", "Vanilla sponge topped with Lotus biscuits")
-                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
+                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full" +
+                                "-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("unsuccessfully-added-cake"));
     }
 
     @Test
+    @DisplayName("Submit cake details but missing the title")
     void onSubmit_withErrors_missingTitle() throws Exception {
-        String[] erroneousFields = { "title" };
+        String[] erroneousFields = {"title"};
 
         mvc.perform(post("/new-cake-details")
                         .param("title", "")
                         .param("description", "Vanilla sponge topped with Lotus biscuits")
-                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
+                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full" +
+                                "-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("form"))
                 .andExpect(model().attributeErrorCount("newCakeDetails", erroneousFields.length))
@@ -133,22 +141,24 @@ class CakeControllerTest {
 
     @Test
     void onSubmit_withErrors_missingDescription() throws Exception {
-        String[] erroneousFields = { "description" };
+        String[] erroneousFields = {"description"};
 
         mvc.perform(post("/new-cake-details")
                         .param("title", "The Biscoff Cake")
                         .param("description", "")
-                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
+                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full" +
+                                "-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("form"))
                 .andExpect(model().attributeErrorCount("newCakeDetails", erroneousFields.length))
-                .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "description", "error.description.missing"))
+                .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "description", "error.description" +
+                        ".missing"))
                 .andDo(print());
     }
 
     @Test
     void onSubmit_withErrors_missingImage() throws Exception {
-        String[] erroneousFields = { "image" };
+        String[] erroneousFields = {"image"};
 
         mvc.perform(post("/new-cake-details")
                         .param("title", "The Biscoff Cake")
@@ -163,12 +173,13 @@ class CakeControllerTest {
 
     @Test
     void onSubmit_withErrors_missingHttpOrHttps() throws Exception {
-        String[] erroneousFields = { "image" };
+        String[] erroneousFields = {"image"};
 
         mvc.perform(post("/new-cake-details")
                         .param("title", "The Biscoff Cake")
                         .param("description", "Vanilla sponge topped with Lotus biscuits")
-                        .param("image", "cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
+                        .param("image", "cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled" +
+                                "-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("form"))
                 .andExpect(model().attributeErrorCount("newCakeDetails", erroneousFields.length))
@@ -178,23 +189,25 @@ class CakeControllerTest {
 
     @Test
     void onSubmit_withErrors_missingTitleAndDescription() throws Exception {
-        String[] erroneousFields = { "title", "description" };
+        String[] erroneousFields = {"title", "description"};
 
         mvc.perform(post("/new-cake-details")
                         .param("title", "")
                         .param("description", "")
-                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
+                        .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full" +
+                                "-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("form"))
                 .andExpect(model().attributeErrorCount("newCakeDetails", erroneousFields.length))
                 .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "title", "error.title.missing"))
-                .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "description", "error.description.missing"))
+                .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "description", "error.description" +
+                        ".missing"))
                 .andDo(print());
     }
 
     @Test
     void onSubmit_withErrors_missingTitleDescriptionAndImage() throws Exception {
-        String[] erroneousFields = { "title", "description", "image" };
+        String[] erroneousFields = {"title", "description", "image"};
 
         mvc.perform(post("/new-cake-details")
                         .param("title", "")
@@ -204,24 +217,27 @@ class CakeControllerTest {
                 .andExpect(view().name("form"))
                 .andExpect(model().attributeErrorCount("newCakeDetails", erroneousFields.length))
                 .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "title", "error.title.missing"))
-                .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "description", "error.description.missing"))
+                .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "description", "error.description" +
+                        ".missing"))
                 .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "image", "error.image.missing"))
                 .andDo(print());
     }
 
     @Test
     void onSubmit_withErrors_missingTitleDescriptionAndImageMissingHttpOrHttps() throws Exception {
-        String[] erroneousFields = { "title", "description", "image" };
+        String[] erroneousFields = {"title", "description", "image"};
 
         mvc.perform(post("/new-cake-details")
                         .param("title", "")
                         .param("description", "")
-                        .param("image", "cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
+                        .param("image", "cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled" +
+                                "-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("form"))
                 .andExpect(model().attributeErrorCount("newCakeDetails", erroneousFields.length))
                 .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "title", "error.title.missing"))
-                .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "description", "error.description.missing"))
+                .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "description", "error.description" +
+                        ".missing"))
                 .andExpect(model().attributeHasFieldErrorCode("newCakeDetails", "image", "error.image.wrong-format"))
                 .andDo(print());
     }

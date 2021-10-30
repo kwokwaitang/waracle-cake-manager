@@ -26,7 +26,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 class CakeRestApiControllerTest {
@@ -56,7 +57,8 @@ class CakeRestApiControllerTest {
         cake1.setEmployeeId(1L);
         cake1.setTitle("The Biscoff Cake");
         cake1.setDescription("Vanilla sponge topped with Lotus biscuits");
-        cake1.setImage("https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203");
+        cake1.setImage("https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1" +
+                ".jpg?v=1602446203");
 
         List<CakeDto> cakes = new ArrayList<>(Arrays.asList(cake1));
 
@@ -74,13 +76,15 @@ class CakeRestApiControllerTest {
         cake1.setEmployeeId(1L);
         cake1.setTitle("The Biscoff Cake");
         cake1.setDescription("Vanilla sponge topped with Lotus biscuits");
-        cake1.setImage("https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203");
+        cake1.setImage("https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1" +
+                ".jpg?v=1602446203");
 
         CakeDto cake2 = new CakeDto();
         cake2.setEmployeeId(2L);
         cake2.setTitle("Lemon cheesecake");
         cake2.setDescription("A cheesecake made of lemon");
-        cake2.setImage("https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg");
+        cake2.setImage("https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co" +
+                ".uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg");
 
         List<CakeDto> cakes = new ArrayList<>(Arrays.asList(cake1, cake2));
 

@@ -2,6 +2,7 @@ package com.waracle.cake_manager.form.validator;
 
 import com.waracle.cake_manager.form.NewCakeDetails;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -9,6 +10,7 @@ import org.springframework.validation.Validator;
 /**
  * Set-up any relevant validation checks when the form is submitted
  */
+@Component
 public class NewCakeDetailsFormValidator implements Validator {
 
     public static final String IMAGE = "image";

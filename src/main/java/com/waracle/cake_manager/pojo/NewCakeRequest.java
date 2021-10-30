@@ -1,7 +1,5 @@
 package com.waracle.cake_manager.pojo;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
 public class NewCakeRequest {
     private String title;
 

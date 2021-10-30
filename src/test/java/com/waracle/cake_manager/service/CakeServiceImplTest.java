@@ -1,6 +1,5 @@
 package com.waracle.cake_manager.service;
 
-import com.waracle.cake_manager.StartupRunner;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.model.Cake;
@@ -23,7 +22,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class CakeServiceImplTest {
@@ -103,24 +101,28 @@ class CakeServiceImplTest {
         cake1.setEmployeeId(1L);
         cake1.setTitle("Lemon cheesecake");
         cake1.setDescription("A cheesecake made of lemon");
-        cake1.setImageUrl("https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg");
+        cake1.setImageUrl("https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co" +
+                ".uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg");
 
         Cake cake2 = new Cake();
         cake2.setEmployeeId(2L);
         cake2.setTitle("victoria sponge");
         cake2.setDescription("sponge with jam");
-        cake2.setImageUrl("http://www.bbcgoodfood.com/sites/bbcgoodfood.com/files/recipe_images/recipe-image-legacy-id--1001468_10.jpg");
+        cake2.setImageUrl("http://www.bbcgoodfood.com/sites/bbcgoodfood" +
+                ".com/files/recipe_images/recipe-image-legacy-id--1001468_10.jpg");
 
         // Set-up some Dtos
         CakeDto cakeDto1 = new CakeDto();
         cakeDto1.setTitle("Lemon cheesecake");
         cakeDto1.setDescription("A cheesecake made of lemon");
-        cakeDto1.setImage("https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg");
+        cakeDto1.setImage("https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co" +
+                ".uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg");
 
         CakeDto cakeDto2 = new CakeDto();
         cakeDto2.setTitle("victoria sponge");
         cakeDto2.setDescription("sponge with jam");
-        cakeDto2.setImage("http://www.bbcgoodfood.com/sites/bbcgoodfood.com/files/recipe_images/recipe-image-legacy-id--1001468_10.jpg");
+        cakeDto2.setImage("http://www.bbcgoodfood.com/sites/bbcgoodfood" +
+                ".com/files/recipe_images/recipe-image-legacy-id--1001468_10.jpg");
 
         Iterable<Cake> iterable = Arrays.asList(cake1, cake2);
 

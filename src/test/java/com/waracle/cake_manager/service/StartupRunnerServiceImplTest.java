@@ -3,9 +3,9 @@ package com.waracle.cake_manager.service;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.repository.CakeRepository;
-import org.apache.http.client.HttpClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 class StartupRunnerServiceImplTest {
@@ -25,43 +27,51 @@ class StartupRunnerServiceImplTest {
     CakeRepository cakeRepository;
 
     @Mock
-    HttpClient httpClient;
+    CakeDataService cakeDataService;
 
     StartupRunnerServiceImpl serviceImplUnderTest;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        serviceImplUnderTest = new StartupRunnerServiceImpl(cakeRepository, httpClient);
+        serviceImplUnderTest = new StartupRunnerServiceImpl(cakeRepository, cakeDataService);
     }
 
     @Test
-    void constructorWithMissingCakeRepository() {
+    @DisplayName("Testing for an unavailable cake repository")
+    void constructorWithUnavailableCakeRepository() {
         Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
-            new StartupRunnerServiceImpl(null, httpClient);
+            new StartupRunnerServiceImpl(null, cakeDataService);
         });
 
-        String expectedMessage = "Missing a cake repository";
+        String expectedMessage = "Unavailable cake repository";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
-    void constructorWithMissingHttpClient() {
+    @DisplayName("An alternative way of testing for an unavailable cake repository")
+    void constructorWithUnavailableCakeRepositoryAlternative() {
+        assertThatThrownBy(() -> new StartupRunnerServiceImpl(null, cakeDataService))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessageContaining("Unavailable cake repository");
+
+        then(cakeRepository).shouldHaveNoInteractions();
+        then(cakeDataService).shouldHaveNoInteractions();
+    }
+
+    @Test
+    @DisplayName("Testing for an unavailable cake data service")
+    void constructorWithUnavailableCakeDataService() {
         Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
             new StartupRunnerServiceImpl(cakeRepository, null);
         });
 
-        String expectedMessage = "Missing an HTTP client";
+        String expectedMessage = "Unavailable cake data service";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
-    }
-
-    @Test
-    void fetchJsonCakeData() {
-        // TODO not an easy one to do
     }
 
     @Test
@@ -69,7 +79,8 @@ class StartupRunnerServiceImplTest {
         Cake cake = new Cake();
         cake.setTitle("Pound Cake");
         cake.setDescription("Made with a pound of each of the main ingredients (flour, butter, and sugar)");
-        cake.setImageUrl("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/chocolate-matcha-swirl-pound-cake-1552946276.jpg?crop=1.00xw:0.857xh;0,0&resize=980:*");
+        cake.setImageUrl("https://hips.hearstapps.com/hmg-prod.s3.amazonaws" +
+                ".com/images/chocolate-matcha-swirl-pound-cake-1552946276.jpg?crop=1.00xw:0.857xh;0,0&resize=980:*");
 
         List<Cake> cakes = new ArrayList<>();
         cakes.add(cake);
@@ -79,7 +90,8 @@ class StartupRunnerServiceImplTest {
         CakeDto cakeDto = new CakeDto();
         cakeDto.setTitle("Pound Cake");
         cakeDto.setDescription("Made with a pound of each of the main ingredients (flour, butter, and sugar)");
-        cakeDto.setImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/chocolate-matcha-swirl-pound-cake-1552946276.jpg?crop=1.00xw:0.857xh;0,0&resize=980:*");
+        cakeDto.setImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws" +
+                ".com/images/chocolate-matcha-swirl-pound-cake-1552946276.jpg?crop=1.00xw:0.857xh;0,0&resize=980:*");
 
         List<CakeDto> cakeDtos = new ArrayList<>();
         cakeDtos.add(cakeDto);

@@ -43,7 +43,7 @@ public class CakeRestApiController {
 
     /**
      * "The /cakes endpoint must also allow new cakes to be created."
-     *
+     * <p>
      * An example JSON to post...
      * <pre>
      *     {
@@ -52,7 +52,6 @@ public class CakeRestApiController {
      *          "imageUrl" : "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"
      *      }
      * </pre>
-     *
      *
      * @param newCakeRequest
      * @return Response containing the primary value of the newly added cake

@@ -101,7 +101,8 @@ public class JwtTokenUtil implements Serializable {
      *     and the identity of the issuer (iss)</li>
      *     <li>Sign the JWT using the HS512 algorithm and with a "secret key"</li>
      *     <li>According to JWS Compact Serialization
-     *     (<a href="https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1">JWS Compact Serialization Overview</a>)
+     *     (
+     *     <a href="https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1">JWS Compact Serialization Overview</a>)
      *     compaction of the JWT to a URL-safe string</li>
      * </ol>
      *

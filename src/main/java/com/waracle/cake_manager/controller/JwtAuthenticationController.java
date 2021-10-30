@@ -2,16 +2,19 @@ package com.waracle.cake_manager.controller;
 
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.config.JwtTokenUtil;
-import com.waracle.cake_manager.pojo.JwtAuthenticationRequest;
-import com.waracle.cake_manager.pojo.JwtAuthenticationResponse;
 import com.waracle.cake_manager.model.UserDao;
 import com.waracle.cake_manager.model.UserDto;
+import com.waracle.cake_manager.pojo.JwtAuthenticationRequest;
+import com.waracle.cake_manager.pojo.JwtAuthenticationResponse;
 import com.waracle.cake_manager.service.JwtUserDetailsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.logging.Logger;
 

@@ -8,24 +8,24 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"/>
 
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
     <!-- index styles -->
-    <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="/index.css"/>
 </head>
 <body>
-    <main role="main" class="flex-shrink-0">
-        <div class="container">
-            <h1>New cake details</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <h1>New cake details</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 
-            <form action="#" th:action="@{/new-cake-details}" th:object="${newCakeDetails}" method="post">
-                <div id="form" th:insert="~{fragments/new-cake-details-form :: __${formFragment}__}"></div>
-            </form>
-        </div>
-    </main>
+        <form action="#" th:action="@{/new-cake-details}" th:object="${newCakeDetails}" method="post">
+            <div id="form" th:insert="~{fragments/new-cake-details-form :: __${formFragment}__}"></div>
+        </form>
+    </div>
+</main>
 
-    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </body>
 </html>

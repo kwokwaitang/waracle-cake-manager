@@ -1,1 +1,295 @@
-{"_type":"export","__export_format":4,"__export_date":"2021-10-04T19:13:44.143Z","__export_source":"insomnia.desktop.app:v2021.5.3","resources":[{"_id":"req_9f4426b540fb47e79021ea1ec24e56bb","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786406,"created":1633372786406,"url":"http://localhost:8080/cakes","name":"localhost:8080/cakes","description":"","method":"GET","body":{},"parameters":[],"headers":[{"id":"pair_9ed99f4660c14640b95aaa462512a4a4","name":"Authorization","value":"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiS2l0a2F0IiwiZXhwIjoxNjMzMzYxMjQ2LCJpYXQiOjE2MzMzNjA5NDZ9.e1uGyiGa5U1YOW8vpP8tm1-Ug_qowQQ8txdHYXag0wqwyo-C_U4Hl8DBO6B1P3tVQF0NDIRYCNzGY0YmdKBCgQ","description":""},{"id":"pair_9c11a8de7cac41e2b9fd04d011e42bb3","name":"","value":"","description":"","disabled":true},{"id":"pair_9b25ab0ecb5a4e3db7db3588b93237c5","name":"","value":"","description":"","disabled":true}],"authentication":{"type":"bearer","token":""},"metaSortKey":-1625940057295.1875,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"wrk_aceb93743bb84263aec6fb46aedd1e20","parentId":null,"modified":1633372786389,"created":1633372786389,"name":"Warcle Cake Manager MIcro-service","description":"","scope":"collection","_type":"workspace"},{"_id":"req_534d40038eea4f2bbb80982d8571b6c5","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786409,"created":1633372786409,"url":"http://localhost:8080/cakes","name":"localhost:8080/cakes (to add)","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"title\" : \"Wedding cake\",\n\t\"description\" : \"3-tier with couple on top\",\n\t\"imageUrl\" : \"http://someweddingcakeimage.com\"\n}"},"parameters":[],"headers":[{"id":"pair_9ed99f4660c14640b95aaa462512a4a4","name":"Authorization","value":"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrd29rIiwiaXNzIjoiS2l0a2F0IiwiZXhwIjoxNjMzMzYwNjUzLCJpYXQiOjE2MzMzNjAzNTN9.G32wFpxKUXR75kydrcWgS7T4oKMOLD-SneUVuv6tixx2c6DFoCpRP9dE35U1mww-8ibOx4va9dOrZOS0P5SrZQ","description":""},{"id":"pair_9c11a8de7cac41e2b9fd04d011e42bb3","name":"","value":"","description":"","disabled":true},{"id":"pair_9b25ab0ecb5a4e3db7db3588b93237c5","name":"","value":"","description":"","disabled":true},{"name":"Content-Type","value":"application/json","id":"pair_b7133815dedd47b1a231df8eba7ff1cf"}],"authentication":{"type":"bearer","token":""},"metaSortKey":-1625481887339.3594,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_31f71b3b4dd3453abff103e894451a43","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786408,"created":1633372786408,"url":"http://localhost:8080","name":"localhost:8080","description":"","method":"GET","body":{},"parameters":[],"headers":[{"id":"pair_9ed99f4660c14640b95aaa462512a4a4","name":"Authorization","value":"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrd29rIiwiaXNzIjoiS2l0a2F0IiwiZXhwIjoxNjMzMzYwNjUzLCJpYXQiOjE2MzMzNjAzNTN9.G32wFpxKUXR75kydrcWgS7T4oKMOLD-SneUVuv6tixx2c6DFoCpRP9dE35U1mww-8ibOx4va9dOrZOS0P5SrZQ","description":""},{"id":"pair_9c11a8de7cac41e2b9fd04d011e42bb3","name":"","value":"","description":"","disabled":true},{"id":"pair_9b25ab0ecb5a4e3db7db3588b93237c5","name":"","value":"","description":"","disabled":true}],"authentication":{"type":"bearer","token":""},"metaSortKey":-1625023717383.5312,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_396cfdcaaba14bdab3313b4766cd2314","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786402,"created":1633372786402,"url":"http://localhost:8080/authenticate","name":"localhost:8080/authenticate","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"username\" : \"user\",\n\t\"password\" : \"passw0rd\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_387af13b9fc14ccf96b5b98056e64c55"}],"authentication":{},"metaSortKey":-1624107377471.875,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_99efba3663d64ecbbbcd468fe6d6af01","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786410,"created":1633372786410,"url":"http://localhost:8080/authenticate","name":"localhost:8080/authenticate (different credentials)","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"username\" : \"fred\",\n\t\"password\" : \"password\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_387af13b9fc14ccf96b5b98056e64c55"}],"authentication":{},"metaSortKey":-1623801930834.6562,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_62b06a41e26b4f4988c803783301d0d1","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786404,"created":1633372786404,"url":"http://localhost:8080/register","name":"localhost:8080/register","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"username\" : \"user\",\n\t\"password\" : \"passw0rd\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_387af13b9fc14ccf96b5b98056e64c55"}],"authentication":{},"metaSortKey":-1623496484197.4375,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"env_9d56e04927524f008c3fab08bd2afe2e","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786392,"created":1633372786392,"name":"Base Environment","data":{},"dataPropertyOrder":null,"color":null,"isPrivate":false,"metaSortKey":1632659788688,"_type":"environment"},{"_id":"jar_55330329fc3c44499522451749ef4549","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786394,"created":1633372786394,"name":"Default Jar","cookies":[],"_type":"cookie_jar"},{"_id":"spc_71c4a96bf2324044b44b9fc2a43e090b","parentId":"wrk_aceb93743bb84263aec6fb46aedd1e20","modified":1633372786440,"created":1633372786397,"fileName":"Warcle Cake Manager MIcro-service","contents":"","contentType":"yaml","_type":"api_spec"}]}
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2021-10-04T19:13:44.143Z",
+  "__export_source": "insomnia.desktop.app:v2021.5.3",
+  "resources": [
+    {
+      "_id": "req_9f4426b540fb47e79021ea1ec24e56bb",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786406,
+      "created": 1633372786406,
+      "url": "http://localhost:8080/cakes",
+      "name": "localhost:8080/cakes",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_9ed99f4660c14640b95aaa462512a4a4",
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiS2l0a2F0IiwiZXhwIjoxNjMzMzYxMjQ2LCJpYXQiOjE2MzMzNjA5NDZ9.e1uGyiGa5U1YOW8vpP8tm1-Ug_qowQQ8txdHYXag0wqwyo-C_U4Hl8DBO6B1P3tVQF0NDIRYCNzGY0YmdKBCgQ",
+          "description": ""
+        },
+        {
+          "id": "pair_9c11a8de7cac41e2b9fd04d011e42bb3",
+          "name": "",
+          "value": "",
+          "description": "",
+          "disabled": true
+        },
+        {
+          "id": "pair_9b25ab0ecb5a4e3db7db3588b93237c5",
+          "name": "",
+          "value": "",
+          "description": "",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": ""
+      },
+      "metaSortKey": -1625940057295.1875,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "parentId": null,
+      "modified": 1633372786389,
+      "created": 1633372786389,
+      "name": "Warcle Cake Manager MIcro-service",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_534d40038eea4f2bbb80982d8571b6c5",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786409,
+      "created": 1633372786409,
+      "url": "http://localhost:8080/cakes",
+      "name": "localhost:8080/cakes (to add)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"title\" : \"Wedding cake\",\n\t\"description\" : \"3-tier with couple on top\",\n\t\"imageUrl\" : \"http://someweddingcakeimage.com\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_9ed99f4660c14640b95aaa462512a4a4",
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrd29rIiwiaXNzIjoiS2l0a2F0IiwiZXhwIjoxNjMzMzYwNjUzLCJpYXQiOjE2MzMzNjAzNTN9.G32wFpxKUXR75kydrcWgS7T4oKMOLD-SneUVuv6tixx2c6DFoCpRP9dE35U1mww-8ibOx4va9dOrZOS0P5SrZQ",
+          "description": ""
+        },
+        {
+          "id": "pair_9c11a8de7cac41e2b9fd04d011e42bb3",
+          "name": "",
+          "value": "",
+          "description": "",
+          "disabled": true
+        },
+        {
+          "id": "pair_9b25ab0ecb5a4e3db7db3588b93237c5",
+          "name": "",
+          "value": "",
+          "description": "",
+          "disabled": true
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_b7133815dedd47b1a231df8eba7ff1cf"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": ""
+      },
+      "metaSortKey": -1625481887339.3594,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_31f71b3b4dd3453abff103e894451a43",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786408,
+      "created": 1633372786408,
+      "url": "http://localhost:8080",
+      "name": "localhost:8080",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_9ed99f4660c14640b95aaa462512a4a4",
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrd29rIiwiaXNzIjoiS2l0a2F0IiwiZXhwIjoxNjMzMzYwNjUzLCJpYXQiOjE2MzMzNjAzNTN9.G32wFpxKUXR75kydrcWgS7T4oKMOLD-SneUVuv6tixx2c6DFoCpRP9dE35U1mww-8ibOx4va9dOrZOS0P5SrZQ",
+          "description": ""
+        },
+        {
+          "id": "pair_9c11a8de7cac41e2b9fd04d011e42bb3",
+          "name": "",
+          "value": "",
+          "description": "",
+          "disabled": true
+        },
+        {
+          "id": "pair_9b25ab0ecb5a4e3db7db3588b93237c5",
+          "name": "",
+          "value": "",
+          "description": "",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": ""
+      },
+      "metaSortKey": -1625023717383.5312,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_396cfdcaaba14bdab3313b4766cd2314",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786402,
+      "created": 1633372786402,
+      "url": "http://localhost:8080/authenticate",
+      "name": "localhost:8080/authenticate",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"username\" : \"user\",\n\t\"password\" : \"passw0rd\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_387af13b9fc14ccf96b5b98056e64c55"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1624107377471.875,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_99efba3663d64ecbbbcd468fe6d6af01",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786410,
+      "created": 1633372786410,
+      "url": "http://localhost:8080/authenticate",
+      "name": "localhost:8080/authenticate (different credentials)",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"username\" : \"fred\",\n\t\"password\" : \"password\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_387af13b9fc14ccf96b5b98056e64c55"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1623801930834.6562,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_62b06a41e26b4f4988c803783301d0d1",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786404,
+      "created": 1633372786404,
+      "url": "http://localhost:8080/register",
+      "name": "localhost:8080/register",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"username\" : \"user\",\n\t\"password\" : \"passw0rd\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_387af13b9fc14ccf96b5b98056e64c55"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1623496484197.4375,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_9d56e04927524f008c3fab08bd2afe2e",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786392,
+      "created": 1633372786392,
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": null,
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1632659788688,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_55330329fc3c44499522451749ef4549",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786394,
+      "created": 1633372786394,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_71c4a96bf2324044b44b9fc2a43e090b",
+      "parentId": "wrk_aceb93743bb84263aec6fb46aedd1e20",
+      "modified": 1633372786440,
+      "created": 1633372786397,
+      "fileName": "Warcle Cake Manager MIcro-service",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    }
+  ]
+}

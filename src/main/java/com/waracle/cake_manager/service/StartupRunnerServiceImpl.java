@@ -7,13 +7,6 @@ import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.repository.CakeRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -25,21 +18,17 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
-@PropertySource("classpath:application.properties")
 public class StartupRunnerServiceImpl implements StartupRunnerService {
 
     private static final Logger LOGGER = Logger.getGlobal();
 
-    @Value("${cake.data.url}")
-    private String cakeUrl;
-
     private final CakeRepository cakeRepository;
 
-    private final HttpClient httpClient;
+    private final CakeDataService cakeDataService;
 
-    public StartupRunnerServiceImpl(CakeRepository cakeRepository, HttpClient httpClient) {
-        this.cakeRepository = Objects.requireNonNull(cakeRepository, () -> "Missing a cake repository");
-        this.httpClient = Objects.requireNonNull(httpClient, () -> "Missing an HTTP client");
+    public StartupRunnerServiceImpl(CakeRepository cakeRepository, CakeDataService cakeDataService) {
+        this.cakeRepository = Objects.requireNonNull(cakeRepository, () -> "Unavailable cake repository");
+        this.cakeDataService = Objects.requireNonNull(cakeDataService, () -> "Unavailable cake data service");
     }
 
     /**
@@ -49,16 +38,17 @@ public class StartupRunnerServiceImpl implements StartupRunnerService {
      */
     @PostConstruct
     public void runAfterObjectCreated() {
-        LOGGER.info("PostContruct method called in StartupRunnerServiceImpl");
+        LOGGER.info("PostConstruct method called in StartupRunnerServiceImpl");
     }
 
     @Override
     public List<CakeDto> fetchJsonCakeData() {
         try {
-            String jsonCakeData = getJsonCakeData();
+            String jsonCakeData = cakeDataService.get();
             if (StringUtils.isNotBlank(jsonCakeData)) {
                 ObjectMapper objectMapper = new ObjectMapper();
-                return objectMapper.readValue(jsonCakeData, new TypeReference<List<CakeDto>>() {});
+                return objectMapper.readValue(jsonCakeData, new TypeReference<List<CakeDto>>() {
+                });
             }
         } catch (IOException e) {
             LOGGER.warning(() -> String.format("Problem encountered when fetching cake data [%s]",
@@ -84,18 +74,5 @@ public class StartupRunnerServiceImpl implements StartupRunnerService {
         }
 
         return Collections.emptyList();
-    }
-
-    private String getJsonCakeData() throws IOException {
-        String jsonCakeData = "{}";
-
-        HttpGet request = new HttpGet(cakeUrl);
-        HttpResponse response = httpClient.execute(request);
-        HttpEntity entity = response.getEntity();
-        if (entity != null) {
-            jsonCakeData = EntityUtils.toString(entity);
-        }
-
-        return jsonCakeData;
     }
 }

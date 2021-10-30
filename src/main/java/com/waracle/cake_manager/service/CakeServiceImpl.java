@@ -91,7 +91,8 @@ public class CakeServiceImpl implements CakeService {
         if (StringUtils.isNotBlank(jsonCakeData)) {
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
-                availableCakes = objectMapper.readValue(fetchJsonCakeData(), new TypeReference<List<CakeDto>>() {});
+                availableCakes = objectMapper.readValue(fetchJsonCakeData(), new TypeReference<List<CakeDto>>() {
+                });
             } catch (JsonProcessingException e) {
                 LOGGER.warning(() -> String.format("Problem encountered whilst processing the fetched JSON cake data " +
                         "[%s]", ExceptionUtils.getStackTrace(e)));
