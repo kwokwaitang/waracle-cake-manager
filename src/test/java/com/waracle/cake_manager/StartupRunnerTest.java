@@ -1,27 +1,30 @@
 package com.waracle.cake_manager;
 
-import org.junit.jupiter.api.Assertions;
+import com.waracle.cake_manager.service.StartupRunnerService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.BDDMockito.then;
 
 class StartupRunnerTest {
 
-//    @Mock
-//    StartupRunnerService startupRunnerService;
-//
-//    @BeforeEach
-//    void setUp() {
-//        MockitoAnnotations.openMocks(this);
-//    }
+    @Mock
+    StartupRunnerService startupRunnerService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void constructorWithMissingStartupRunnerService() {
-        Exception exception = Assertions.assertThrows(NullPointerException.class, () -> new StartupRunner(null));
+        assertThatThrownBy(() -> new StartupRunner(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessageContaining("Missing a start-up runner service");
 
-        String expectedMessage = "Missing a start-up runner service";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
+        then(startupRunnerService).shouldHaveNoInteractions();
     }
 }

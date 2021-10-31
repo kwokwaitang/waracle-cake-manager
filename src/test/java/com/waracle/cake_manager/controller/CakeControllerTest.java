@@ -22,7 +22,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.iterableWithSize;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -37,18 +41,17 @@ class CakeControllerTest {
     @Mock
     private CakeService cakeService;
 
-    private CakeController controllerUnderTest;
-
     private MockMvc mvc;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        controllerUnderTest = new CakeController(cakeService);
+        CakeController controllerUnderTest = new CakeController(cakeService);
         mvc = standaloneSetup(controllerUnderTest).build();
     }
 
     @Test
+    @DisplayName("When a cake service is unavailable")
     void constructorWithMissingCakeService() {
         Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
             new CakeController(null);
@@ -76,13 +79,37 @@ class CakeControllerTest {
         mvc.perform(get("/"))
                 .andExpect(model().attribute("cakes", iterableWithSize((equalTo(1)))))
                 .andExpect(status().isOk())
-                .andExpect(view().name("index")).andDo(print());
+                .andExpect(view().name("index"))
+                .andDo(print());
+
+        verify(cakeService, times(1)).getAvailableCakesViaRestApi();
     }
 
     @Test
-    @DisplayName("Only carrot cake recipes")
+    @DisplayName("Display only carrot cake recipes")
     void carrotCakeOnly() throws Exception {
-        throw new RuntimeException("To be implemented");
+        CakeDto carrotCake1 = new CakeDto("abc", "def", "https://abcdef.com");
+        CakeDto carrotCake2 = new CakeDto("ghi", "jkl", "https://ghijkl.com");
+
+        List<CakeDto> carrotCakes = new ArrayList<>(Arrays.asList(carrotCake1, carrotCake2));
+
+        // Traditional Mockito style...
+        when(cakeService.getCarrotCakes()).thenReturn(carrotCakes);
+
+        // or BDD style...
+        given(cakeService.getCarrotCakes()).willReturn(carrotCakes);
+
+        mvc.perform(get("/carrot-cakes"))
+                .andExpect(model().attribute("cakes", iterableWithSize((equalTo(2)))))
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"))
+                .andDo(print());
+
+        // Traditional Mockito style...
+        verify(cakeService, times(1)).getCarrotCakes();
+
+        // or BDD style...
+        then(cakeService).should().getCarrotCakes();
     }
 
     @Test
@@ -106,6 +133,9 @@ class CakeControllerTest {
                                 "-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("successfully-added-cake"));
+
+        verify(cakeService, times(1)).getNewCakeRequest(any(NewCakeDetails.class));
+        verify(cakeService, times(1)).addCakeViaRestApi(any(NewCakeRequest.class));
     }
 
     @Test
@@ -120,6 +150,9 @@ class CakeControllerTest {
                                 "-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("unsuccessfully-added-cake"));
+
+        verify(cakeService, times(1)).getNewCakeRequest(any(NewCakeDetails.class));
+        verify(cakeService, times(1)).addCakeViaRestApi(any(NewCakeRequest.class));
     }
 
     @Test
