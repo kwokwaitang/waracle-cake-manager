@@ -51,7 +51,7 @@ class StartupRunnerServiceImplTest {
     }
 
     @Test
-    @DisplayName("An alternative way of testing for an unavailable cake repository")
+    @DisplayName("An alternative (BDD) way of testing for an unavailable cake repository")
     void constructorWithUnavailableCakeRepositoryAlternative() {
         assertThatThrownBy(() -> new StartupRunnerServiceImpl(null, cakeDataService))
                 .isInstanceOf(NullPointerException.class)
