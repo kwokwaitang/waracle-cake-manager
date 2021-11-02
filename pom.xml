@@ -18,6 +18,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <docker.name>cake-manager</docker.name>
     </properties>
 
     <dependencies>
@@ -106,6 +107,14 @@
             <version>2.0.1.Final</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.37.0</version>
+        </dependency>
+        -->
+
         <!-- webjars -->
         <!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
         <dependency>
@@ -139,7 +148,71 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!--
+                io.fabric8 plugin start (https://dmp.fabric8.io/)
+
+                To integrate docker into the maven life cycle.
+            -->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.37.0</version>
+                <extensions>true</extensions>
+
+                <configuration>
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                            <!-- The name of the image -->
+                            <name>${docker.name}</name>
+                            <build>
+                                <!-- Where to find the Dockerfile... -->
+                                <contextDir>${project.basedir}</contextDir>
+
+                                <!-- When not using the above <contextDir/> tag i.e. when not using a Dockerfile...
+                                <from>openjdk:14-alpine</from>
+                                <entryPoint>
+                                    <exec>
+                                        <args>java</args>
+                                        <args>-jar</args>
+                                        <args>/maven/${project.artifactId}-${project.version}.war</args>
+                                    </exec>
+                                </entryPoint>
+                                -->
+
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <tags>
+                                    <tag>another-main</tag>
+                                </tags>
+                            </build>
+                            <run>
+                                <ports>
+                                    <port>8080:8080</port>
+                                    <port>8443:8443</port>
+                                    <port>80:80</port>
+                                </ports>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+
+                <!-- Each time the 'package' command is run, the 'docker:build' command will be triggered -->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- docker run -p 8080:8080 -p 8443:8443 -p 80:80 - -name another-cake-manager cake-manager:another-main -->
+
+            <!-- io.fabric8 plugin end -->
         </plugins>
     </build>
-
 </project>
