@@ -18,7 +18,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.iterableWithSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -55,6 +55,8 @@ class CakeControllerTest {
                 .andExpect(model().attribute("cakes", iterableWithSize((equalTo(1)))))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index")).andDo(print());
+
+        verify(cakeService, times(1)).getAvailableCakes();
     }
 
     @Test
@@ -75,6 +77,9 @@ class CakeControllerTest {
                 .param("image", "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("successfully-added-cake"));
+
+        verify(cakeService, times(1)).getNewCakeRequestDto(any(NewCakeDetails.class));
+        verify(cakeService, times(1)).addCake(any(NewCakeRequestDto.class));
     }
 
     @Test

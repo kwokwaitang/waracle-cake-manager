@@ -20,7 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CakeServiceImplTest {
 
@@ -78,6 +78,9 @@ class CakeServiceImplTest {
         assertEquals(2, cakeDtos.size());
         assertEquals(cake1.getTitle(), cakeDtos.get(0).getTitle());
         assertEquals(cake2.getTitle(), cakeDtos.get(1).getTitle());
+
+        verify(cakeRepository, times(1)).findAll();
+        verify(modelMapper, times(cakeDtos.size())).map(any(Cake.class), eq(CakeDto.class));
     }
 
     @Test
@@ -86,6 +89,8 @@ class CakeServiceImplTest {
 
         List<CakeDto> cakeDtos = serviceImplUnderTest.getAvailableCakes();
         assertTrue(cakeDtos.isEmpty());
+
+        verify(cakeRepository, times(1)).findAll();
     }
 
     @Test
@@ -107,6 +112,9 @@ class CakeServiceImplTest {
         NewCakeResponseDto newCakeResponse = serviceImplUnderTest.addCake(newCakeRequest);
 
         assertEquals(21L, newCakeResponse.getId());
+
+        verify(modelMapper, times(1)).map(any(NewCakeRequestDto.class), eq(Cake.class));
+        verify(cakeRepository, times(1)).save(any(Cake.class));
     }
 
     @Test

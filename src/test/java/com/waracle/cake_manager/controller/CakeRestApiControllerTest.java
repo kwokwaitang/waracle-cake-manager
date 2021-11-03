@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,21 +32,14 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 class CakeRestApiControllerTest {
 
     @Mock
-    private Model model;
-
-    @Mock
     private CakeService cakeService;
 
-    private CakeRestApiController controllerUnderTest;
-
     private MockMvc mvc;
-
-    private Errors errors;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        controllerUnderTest = new CakeRestApiController(cakeService);
+        CakeRestApiController controllerUnderTest = new CakeRestApiController(cakeService);
         mvc = standaloneSetup(controllerUnderTest).build();
     }
 
@@ -66,6 +59,8 @@ class CakeRestApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].title", is(cake1.getTitle())));
+
+        verify(cakeService, times(1)).getAvailableCakes();
     }
 
     @Test
@@ -91,6 +86,8 @@ class CakeRestApiControllerTest {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].title", is(cake1.getTitle())))
                 .andExpect(jsonPath("$[1].title", is("Lemon cheesecake")));
+
+        verify(cakeService, times(1)).getAvailableCakes();
     }
 
     @Test
@@ -110,6 +107,8 @@ class CakeRestApiControllerTest {
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.id").value("1"))
                 .andDo(print());
+
+        verify(cakeService, times(1)).addCake(any(NewCakeRequestDto.class));
     }
 
     /**
