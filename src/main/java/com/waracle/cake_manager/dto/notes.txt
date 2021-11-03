@@ -1,0 +1,9 @@
+A Data Transfer Object (DTO) is used to transfer data between the layers - Controller and Service
+
+From the controller, when a form is used to capture data, that form data (as held in a NewCakeDetails) is then mapped
+to a DTO and then passed into the Service layer
+
+Mappers are used to converting the form of data when transferred between layers.
+There are two types of Mappers:
+    o Model Mapper - this will map any data to the Model/Entity
+    o DTO Mapper - this will map any data to a DTO

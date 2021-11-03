@@ -1,12 +1,12 @@
-package com.waracle.cake_manager.pojo;
+package com.waracle.cake_manager.dto;
 
-public class NewCakeResponse {
+public class NewCakeResponseDto {
     private Long id;
 
-    public NewCakeResponse() {
+    public NewCakeResponseDto() {
     }
 
-    public NewCakeResponse(Long id) {
+    public NewCakeResponseDto(Long id) {
         this.id = id;
     }
 

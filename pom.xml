@@ -153,6 +153,8 @@
                 io.fabric8 plugin start (https://dmp.fabric8.io/)
 
                 To integrate docker into the maven life cycle.
+
+                Note: Any previous images will be deleted
             -->
             <plugin>
                 <groupId>io.fabric8</groupId>

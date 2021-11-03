@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
+import com.waracle.cake_manager.dto.NewCakeRequestDto;
+import com.waracle.cake_manager.dto.NewCakeResponseDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.model.Cake;
-import com.waracle.cake_manager.pojo.NewCakeRequest;
-import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.repository.CakeRepository;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpEntity;
@@ -79,16 +79,16 @@ public class CakeServiceImpl implements CakeService {
 
     @LogMethodAccess
     @Override
-    public NewCakeResponse addCake(NewCakeRequest newCakeRequest) {
+    public NewCakeResponseDto addCake(NewCakeRequestDto newCakeRequest) {
         Cake cake = cakeRepository.save(modelMapper.map(newCakeRequest, Cake.class));
         LOGGER.info(() -> String.format("\tSaved cake is [%s]", cake));
 
-        return new NewCakeResponse(cake.getEmployeeId());
+        return new NewCakeResponseDto(cake.getEmployeeId());
     }
 
     @LogMethodAccess
     @Override
-    public NewCakeResponse addCakeViaRestApi(NewCakeRequest newCakeRequest) {
+    public NewCakeResponseDto addCakeViaRestApi(NewCakeRequestDto newCakeRequest) {
         HttpPost request = new HttpPost(CAKES_URL);
 
         try {
@@ -100,41 +100,41 @@ public class CakeServiceImpl implements CakeService {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 String jsonCakeData = EntityUtils.toString(entity);
-                return objectMapper.readValue(jsonCakeData, NewCakeResponse.class);
+                return objectMapper.readValue(jsonCakeData, NewCakeResponseDto.class);
             }
         } catch (IOException e) {
             LOGGER.warning(() -> String.format("Problem encountered whilst saving a cake via a REST API [%s]",
                     ExceptionUtils.getStackTrace(e)));
         }
 
-        return new NewCakeResponse();
+        return new NewCakeResponseDto();
     }
 
     @Override
-    public NewCakeRequest getNewCakeRequest(NewCakeDetails newCakeDetails) {
-        return getNewCakeRequest(newCakeDetails.getTitle(), newCakeDetails.getDescription(), newCakeDetails.getImage());
+    public NewCakeRequestDto getNewCakeRequestDto(NewCakeDetails newCakeDetails) {
+        return getNewCakeRequestDto(newCakeDetails.getTitle(), newCakeDetails.getDescription(), newCakeDetails.getImage());
     }
 
     @Override
-    public NewCakeRequest getNewCakeRequest(String title, String description, String image) {
-        return new NewCakeRequest(title, description, image);
+    public NewCakeRequestDto getNewCakeRequestDto(String title, String description, String image) {
+        return new NewCakeRequestDto(title, description, image);
     }
 
     /**
-     * Generic conversion of a List of entities to a list of DTOs
+     * Generic conversion of a list of source objects of type S to a list of type T
      * <p>
      * See https://www.baeldung.com/java-modelmapper-lists
      *
-     * @param listOfEntities
-     * @param targetDtoClass
-     * @param <S>            The entity object
-     * @param <T>            The target DTO class
-     * @return The equivalent list of DTO objects
+     * @param sourceObjects List of source objects
+     * @param targetClass   The target class
+     * @param <S>           Source objects of type S
+     * @param <T>           Target class
+     * @return List of objects of type T
      */
-    private <S, T> List<T> mapList(List<S> listOfEntities, Class<T> targetDtoClass) {
-        return listOfEntities
+    private <S, T> List<T> mapList(List<S> sourceObjects, Class<T> targetClass) {
+        return sourceObjects
                 .stream()
-                .map(element -> modelMapper.map(element, targetDtoClass))
+                .map(sourceObject -> modelMapper.map(sourceObject, targetClass))
                 .collect(Collectors.toList());
     }
 }

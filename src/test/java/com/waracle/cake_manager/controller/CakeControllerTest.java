@@ -1,16 +1,15 @@
 package com.waracle.cake_manager.controller;
 
 import com.waracle.cake_manager.dto.CakeDto;
+import com.waracle.cake_manager.dto.NewCakeRequestDto;
+import com.waracle.cake_manager.dto.NewCakeResponseDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
-import com.waracle.cake_manager.pojo.NewCakeRequest;
-import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.service.CakeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,19 +28,14 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 class CakeControllerTest {
 
     @Mock
-    private Model model;
-
-    @Mock
     private CakeService cakeService;
-
-    private CakeController controllerUnderTest;
 
     private MockMvc mvc;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        controllerUnderTest = new CakeController(cakeService);
+        CakeController controllerUnderTest = new CakeController(cakeService);
         mvc = standaloneSetup(controllerUnderTest).build();
     }
 
@@ -72,8 +66,8 @@ class CakeControllerTest {
 
     @Test
     void onSubmit_withNoErrorsSuccessfullyAddedCake() throws Exception {
-        when(cakeService.getNewCakeRequest(any(NewCakeDetails.class))).thenReturn(new NewCakeRequest());
-        when(cakeService.addCake(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(88L));
+        when(cakeService.getNewCakeRequestDto(any(NewCakeDetails.class))).thenReturn(new NewCakeRequestDto());
+        when(cakeService.addCake(any(NewCakeRequestDto.class))).thenReturn(new NewCakeResponseDto(88L));
 
         mvc.perform(post("/new-cake-details")
                 .param("title", "The Biscoff Cake")

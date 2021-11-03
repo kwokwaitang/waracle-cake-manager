@@ -2,8 +2,8 @@ package com.waracle.cake_manager.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cake_manager.dto.CakeDto;
-import com.waracle.cake_manager.pojo.NewCakeRequest;
-import com.waracle.cake_manager.pojo.NewCakeResponse;
+import com.waracle.cake_manager.dto.NewCakeRequestDto;
+import com.waracle.cake_manager.dto.NewCakeResponseDto;
 import com.waracle.cake_manager.service.CakeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -95,15 +95,15 @@ class CakeRestApiControllerTest {
 
     @Test
     void newCakeDetails() throws Exception {
-        NewCakeRequest newCakeRequest = new NewCakeRequest();
+        NewCakeRequestDto newCakeRequest = new NewCakeRequestDto();
         newCakeRequest.setTitle("Carrot cake");
         newCakeRequest.setDescription("Bugs bunnys favourite");
         newCakeRequest.setImageUrl("http://www.villageinn.com/i/pies/profile/carrotcake_main1.jpg");
 
-        NewCakeResponse newCakeResponse = new NewCakeResponse();
+        NewCakeResponseDto newCakeResponse = new NewCakeResponseDto();
         newCakeResponse.setId(1L);
 
-        when(cakeService.addCake(any(NewCakeRequest.class))).thenReturn(newCakeResponse);
+        when(cakeService.addCake(any(NewCakeRequestDto.class))).thenReturn(newCakeResponse);
 
         mvc.perform(post("/cakes").contentType(APPLICATION_JSON).accept(APPLICATION_JSON).content(asJsonString(newCakeRequest)))
                 .andExpect(status().isOk())

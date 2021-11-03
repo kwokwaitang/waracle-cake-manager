@@ -2,8 +2,8 @@ package com.waracle.cake_manager.controller;
 
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
-import com.waracle.cake_manager.pojo.NewCakeRequest;
-import com.waracle.cake_manager.pojo.NewCakeResponse;
+import com.waracle.cake_manager.dto.NewCakeRequestDto;
+import com.waracle.cake_manager.dto.NewCakeResponseDto;
 import com.waracle.cake_manager.service.CakeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +62,7 @@ public class CakeRestApiController {
      */
     @LogMethodAccess
     @PostMapping("/cakes")
-    public ResponseEntity<NewCakeResponse> newCakeDetails(@RequestBody NewCakeRequest newCakeRequest) {
+    public ResponseEntity<NewCakeResponseDto> newCakeDetails(@RequestBody NewCakeRequestDto newCakeRequest) {
         return ResponseEntity.ok(cakeService.addCake(newCakeRequest));
     }
 }

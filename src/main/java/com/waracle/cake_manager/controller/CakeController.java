@@ -1,10 +1,10 @@
 package com.waracle.cake_manager.controller;
 
 import com.waracle.cake_manager.advice.LogMethodAccess;
+import com.waracle.cake_manager.dto.NewCakeRequestDto;
+import com.waracle.cake_manager.dto.NewCakeResponseDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.form.validator.NewCakeDetailsFormValidator;
-import com.waracle.cake_manager.pojo.NewCakeRequest;
-import com.waracle.cake_manager.pojo.NewCakeResponse;
 import com.waracle.cake_manager.service.CakeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +27,13 @@ public class CakeController {
 
     private final CakeService cakeService;
 
+    /**
+     * Note...
+     * Tried to set up NewCakeDetailsFormValidator as a constructor injected dependency but that just messes up the unit
+     * tests - no solution found as yet!?!?!?!
+     *
+     * @param cakeService
+     */
     public CakeController(CakeService cakeService) {
         this.cakeService = Objects.requireNonNull(cakeService, () -> "Missing a cake service");
     }
@@ -71,10 +78,11 @@ public class CakeController {
     /**
      * To handle the submission of the form for capturing new cake details
      *
-     * @param newCakeDetails
-     * @param errors
+     * @param newCakeDetails Captured form data
+     * @param errors         From validation checks
      * @param model
-     * @return
+     * @return The view, either the form (when there are issues with the form) or an indication if the cake details
+     * have been saved to the database
      */
     @LogMethodAccess
     @PostMapping("/new-cake-details")
@@ -88,11 +96,11 @@ public class CakeController {
         if (!errors.hasErrors()) {
             onSubmitMsg = () -> String.format("\tNew cake details are fine [%s]", newCakeDetails);
 
-            NewCakeRequest newCakeRequest = cakeService.getNewCakeRequest(newCakeDetails);
-            NewCakeResponse newCakeResponse = cakeService.addCake(newCakeRequest);
-            LOGGER.info(() -> String.format("\tResponse is [%s]", newCakeResponse));
+            NewCakeRequestDto newCakeRequestDto = cakeService.getNewCakeRequestDto(newCakeDetails);
+            NewCakeResponseDto newCakeResponseDto = cakeService.addCake(newCakeRequestDto);
+            LOGGER.info(() -> String.format("\tResponse is [%s]", newCakeResponseDto));
 
-            if (newCakeResponse.getId() != null) {
+            if (newCakeResponseDto.getId() != null) {
                 view = "successfully-added-cake";
             } else {
                 view = "unsuccessfully-added-cake";

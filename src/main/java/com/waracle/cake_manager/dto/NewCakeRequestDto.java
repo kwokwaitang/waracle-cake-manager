@@ -1,8 +1,8 @@
-package com.waracle.cake_manager.pojo;
+package com.waracle.cake_manager.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-public class NewCakeRequest {
+public class NewCakeRequestDto {
     private String title;
 
     private String description;
@@ -13,10 +13,10 @@ public class NewCakeRequest {
         return title;
     }
 
-    public NewCakeRequest() {
+    public NewCakeRequestDto() {
     }
 
-    public NewCakeRequest(String title, String description, String imageUrl) {
+    public NewCakeRequestDto(String title, String description, String imageUrl) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;

@@ -2,8 +2,8 @@ package com.waracle.cake_manager.service;
 
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
-import com.waracle.cake_manager.pojo.NewCakeRequest;
-import com.waracle.cake_manager.pojo.NewCakeResponse;
+import com.waracle.cake_manager.dto.NewCakeRequestDto;
+import com.waracle.cake_manager.dto.NewCakeResponseDto;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public interface CakeService {
      * @param newCakeRequest Cake details in JSON
      * @return
      */
-    NewCakeResponse addCake(NewCakeRequest newCakeRequest);
+    NewCakeResponseDto addCake(NewCakeRequestDto newCakeRequest);
 
     /**
      * Add a new cake to the system via a REST API
@@ -36,9 +36,9 @@ public interface CakeService {
      * @param newCakeRequest Cake details in JSON
      * @return
      */
-    NewCakeResponse addCakeViaRestApi(NewCakeRequest newCakeRequest);
+    NewCakeResponseDto addCakeViaRestApi(NewCakeRequestDto newCakeRequest);
 
-    NewCakeRequest getNewCakeRequest(NewCakeDetails newCakeDetails);
+    NewCakeRequestDto getNewCakeRequestDto(NewCakeDetails newCakeDetails);
 
-    NewCakeRequest getNewCakeRequest(String title, String description, String image);
+    NewCakeRequestDto getNewCakeRequestDto(String title, String description, String image);
 }

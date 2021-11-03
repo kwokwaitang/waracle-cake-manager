@@ -1,0 +1,4 @@
+Could have another package here for handling the request body for POST (save/create) and PUT (update/amend) requests
+but for now, the form package works fine as holds the form backing object (aka as a command object)
+
+A form backing object is used to collect all information on a form (and only that)

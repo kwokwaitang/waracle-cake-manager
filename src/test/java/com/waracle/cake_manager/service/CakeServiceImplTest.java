@@ -3,8 +3,8 @@ package com.waracle.cake_manager.service;
 import com.waracle.cake_manager.dto.CakeDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.model.Cake;
-import com.waracle.cake_manager.pojo.NewCakeRequest;
-import com.waracle.cake_manager.pojo.NewCakeResponse;
+import com.waracle.cake_manager.dto.NewCakeRequestDto;
+import com.waracle.cake_manager.dto.NewCakeResponseDto;
 import com.waracle.cake_manager.repository.CakeRepository;
 import org.apache.http.client.HttpClient;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,7 +90,7 @@ class CakeServiceImplTest {
 
     @Test
     void addCake() {
-        NewCakeRequest newCakeRequest = new NewCakeRequest();
+        NewCakeRequestDto newCakeRequest = new NewCakeRequestDto();
         newCakeRequest.setTitle("abc");
         newCakeRequest.setDescription("def");
         newCakeRequest.setImageUrl("http://ghi.com");
@@ -101,10 +101,10 @@ class CakeServiceImplTest {
         cake.setDescription("def");
         cake.setImageUrl("http://ghi.com");
 
-        when(modelMapper.map(any(NewCakeRequest.class), eq(Cake.class))).thenReturn(cake);
+        when(modelMapper.map(any(NewCakeRequestDto.class), eq(Cake.class))).thenReturn(cake);
         when(cakeRepository.save(any(Cake.class))).thenReturn(cake);
 
-        NewCakeResponse newCakeResponse = serviceImplUnderTest.addCake(newCakeRequest);
+        NewCakeResponseDto newCakeResponse = serviceImplUnderTest.addCake(newCakeRequest);
 
         assertEquals(21L, newCakeResponse.getId());
     }
@@ -116,16 +116,16 @@ class CakeServiceImplTest {
         newCakeDetails.setDescription("def");
         newCakeDetails.setImage("https://some-nice-cake.com/with-lots-of-cream.gif");
 
-        NewCakeRequest mewNewCakeRequest = serviceImplUnderTest.getNewCakeRequest(newCakeDetails);
+        NewCakeRequestDto mewNewCakeRequestDto = serviceImplUnderTest.getNewCakeRequestDto(newCakeDetails);
 
-        assertEquals(newCakeDetails.getTitle(), mewNewCakeRequest.getTitle());
-        assertEquals(newCakeDetails.getDescription(), mewNewCakeRequest.getDescription());
-        assertEquals(newCakeDetails.getImage(), mewNewCakeRequest.getImageUrl());
+        assertEquals(newCakeDetails.getTitle(), mewNewCakeRequestDto.getTitle());
+        assertEquals(newCakeDetails.getDescription(), mewNewCakeRequestDto.getDescription());
+        assertEquals(newCakeDetails.getImage(), mewNewCakeRequestDto.getImageUrl());
     }
 
     @Test
     void getNewCakeRequest_withTitleDescImage() {
-        NewCakeRequest mewNewCakeRequest = serviceImplUnderTest.getNewCakeRequest("abc", "def", "https://some-nice" +
+        NewCakeRequestDto mewNewCakeRequest = serviceImplUnderTest.getNewCakeRequestDto("abc", "def", "https://some-nice" +
                 "-cake.com/with-lots-of-cream.gif");
 
         assertEquals("abc", mewNewCakeRequest.getTitle());

@@ -1,0 +1,4 @@
+It will only take the data from the controller layer and transfer it to the repository layer
+It can contain business logic and model the data for the repository layer
+It will also take the data from the repository layer and send it back to Controller Layer
+Only the Controller layer should invoke the Service Layer
