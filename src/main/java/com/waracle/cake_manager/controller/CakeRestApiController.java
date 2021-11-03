@@ -57,12 +57,12 @@ public class CakeRestApiController {
      * </pre>
      *
      *
-     * @param newCakeRequest
+     * @param newCakeRequestDto
      * @return Response containing the primary value of the newly added cake
      */
     @LogMethodAccess
     @PostMapping("/cakes")
-    public ResponseEntity<NewCakeResponseDto> newCakeDetails(@RequestBody NewCakeRequestDto newCakeRequest) {
-        return ResponseEntity.ok(cakeService.addCake(newCakeRequest));
+    public ResponseEntity<NewCakeResponseDto> newCakeDetails(@RequestBody NewCakeRequestDto newCakeRequestDto) {
+        return ResponseEntity.ok(cakeService.addCake(newCakeRequestDto));
     }
 }

@@ -50,6 +50,7 @@ public class CakeServiceImpl implements CakeService {
     public List<CakeDto> getAvailableCakes() {
         List<Cake> cakes = (List<Cake>) cakeRepository.findAll();
         if (!cakes.isEmpty()) {
+            //return GeneralUtils.mapList(cakes, CakeDto.class);
             return mapList(cakes, CakeDto.class);
         }
 
@@ -79,8 +80,8 @@ public class CakeServiceImpl implements CakeService {
 
     @LogMethodAccess
     @Override
-    public NewCakeResponseDto addCake(NewCakeRequestDto newCakeRequest) {
-        Cake cake = cakeRepository.save(modelMapper.map(newCakeRequest, Cake.class));
+    public NewCakeResponseDto addCake(NewCakeRequestDto newCakeRequestDto) {
+        Cake cake = cakeRepository.save(modelMapper.map(newCakeRequestDto, Cake.class));
         LOGGER.info(() -> String.format("\tSaved cake is [%s]", cake));
 
         return new NewCakeResponseDto(cake.getEmployeeId());
@@ -88,12 +89,12 @@ public class CakeServiceImpl implements CakeService {
 
     @LogMethodAccess
     @Override
-    public NewCakeResponseDto addCakeViaRestApi(NewCakeRequestDto newCakeRequest) {
+    public NewCakeResponseDto addCakeViaRestApi(NewCakeRequestDto newCakeRequestDto) {
         HttpPost request = new HttpPost(CAKES_URL);
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            StringEntity requestEntity = new StringEntity(objectMapper.writeValueAsString(newCakeRequest),
+            StringEntity requestEntity = new StringEntity(objectMapper.writeValueAsString(newCakeRequestDto),
                     ContentType.APPLICATION_JSON);
             request.setEntity(requestEntity);
             HttpResponse response = httpClient.execute(request);
