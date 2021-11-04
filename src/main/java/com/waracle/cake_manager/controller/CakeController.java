@@ -53,7 +53,10 @@ public class CakeController {
     @LogMethodAccess
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("cakes", cakeService.getAvailableCakes());
+        model.addAttribute("cakes", cakeService.getAvailableCakes(3));
+
+        // To trigger a modal as soon as the index view is rendered
+        //model.addAttribute("exceptionIssue", "Blah blah blah...");
 
         return "index";
     }

@@ -1,10 +1,12 @@
 package com.waracle.cake_manager.controller;
 
+import com.waracle.cake_manager.exception.AnotherMyOwnRuntimeException;
 import com.waracle.cake_manager.exception.MyOwnException;
 import com.waracle.cake_manager.exception.MyOwnRuntimeException;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.RequestDispatcher;
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CakeErrorController implements ErrorController {
 
     @GetMapping("/error")
-    public String error(HttpServletRequest request) {
+    public String error(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
@@ -53,5 +55,10 @@ public class CakeErrorController implements ErrorController {
     @GetMapping("/throw-my-own-exception")
     public String myOwnExceptionHandling() throws MyOwnRuntimeException {
         throw new MyOwnRuntimeException("Deliberately throwing my own run-time exception & handling it");
+    }
+
+    @GetMapping("/throw-another-my-own-exception")
+    public String anotherMyOwnExceptionHandling() throws MyOwnRuntimeException {
+        throw new AnotherMyOwnRuntimeException("Deliberately throwing another my own run-time exception & handling it");
     }
 }

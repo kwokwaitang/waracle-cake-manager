@@ -36,7 +36,10 @@
         </div>
     </main>
 
+    <div th:replace="${exceptionIssue} ? ~{fragments/modal :: myModal} : ~{}"></div>
+
     <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script src="/index.js"></script>
 </body>
 </html>

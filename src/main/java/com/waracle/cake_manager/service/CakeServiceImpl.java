@@ -9,6 +9,7 @@ import com.waracle.cake_manager.dto.NewCakeResponseDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.repository.CakeRepository;
+import com.waracle.cake_manager.utils.GeneralUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -50,8 +51,17 @@ public class CakeServiceImpl implements CakeService {
     public List<CakeDto> getAvailableCakes() {
         List<Cake> cakes = (List<Cake>) cakeRepository.findAll();
         if (!cakes.isEmpty()) {
-            //return GeneralUtils.mapList(cakes, CakeDto.class);
             return mapList(cakes, CakeDto.class);
+        }
+
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<CakeDto> getAvailableCakes(int limit) {
+        List<Cake> cakes = (List<Cake>) cakeRepository.findAll();
+        if (!cakes.isEmpty()) {
+            return GeneralUtils.mapListWithLimit(cakes, CakeDto.class, limit);
         }
 
         return Collections.emptyList();

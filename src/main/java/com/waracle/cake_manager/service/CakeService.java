@@ -1,9 +1,9 @@
 package com.waracle.cake_manager.service;
 
 import com.waracle.cake_manager.dto.CakeDto;
-import com.waracle.cake_manager.form.NewCakeDetails;
 import com.waracle.cake_manager.dto.NewCakeRequestDto;
 import com.waracle.cake_manager.dto.NewCakeResponseDto;
+import com.waracle.cake_manager.form.NewCakeDetails;
 
 import java.util.List;
 
@@ -14,6 +14,14 @@ public interface CakeService {
      * @return List of cakes
      */
     List<CakeDto> getAvailableCakes();
+
+    /**
+     * Retrieve a limited list of available cakes from a database
+     *
+     * @param limit Number of cakes to retrieve
+     * @return List of cakes
+     */
+    List<CakeDto> getAvailableCakes(int limit);
 
     /**
      * Retrieve a list of available cakes from a REST API

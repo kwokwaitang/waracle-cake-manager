@@ -34,4 +34,18 @@ public class GeneralUtils {
                 .map(sourceObject -> modelMapper.map(sourceObject, targetClass))
                 .collect(Collectors.toList());
     }
+
+    public static <S, T> List<T> mapListWithLimit(List<S> sourceObjects, Class<T> targetClass, int limit) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                // To allow ModelMapper to compare private fields in the mapping classes (objects)
+                .setFieldMatchingEnabled(true)
+                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+
+        return sourceObjects
+                .stream()
+                .limit(limit)
+                .map(sourceObject -> modelMapper.map(sourceObject, targetClass))
+                .collect(Collectors.toList());
+    }
 }
