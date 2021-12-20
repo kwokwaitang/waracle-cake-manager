@@ -121,7 +121,7 @@ class CakeControllerTest {
     }
 
     @Test
-    @DisplayName("Submit all required cake details")
+    @DisplayName("Submit all required cake details and successful")
     void onSubmit_withNoErrors_SuccessfullyAddedCake() throws Exception {
         when(cakeService.getNewCakeRequest(any(NewCakeDetails.class))).thenReturn(new NewCakeRequest());
         when(cakeService.addCakeViaRestApi(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(88L));
@@ -139,6 +139,7 @@ class CakeControllerTest {
     }
 
     @Test
+    @DisplayName("Submit all required cake details but unsuccessful")
     void onSubmit_withNoErrors_UnsuccessfullyAddedCake() throws Exception {
         when(cakeService.getNewCakeRequest(any(NewCakeDetails.class))).thenReturn(new NewCakeRequest());
         when(cakeService.addCakeViaRestApi(any(NewCakeRequest.class))).thenReturn(new NewCakeResponse(null));
