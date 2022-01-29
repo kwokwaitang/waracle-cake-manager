@@ -8,8 +8,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -53,7 +55,19 @@ public class LogMethodAccessAspect {
                     .boxed()
                     .collect(Collectors.toMap(key -> parameters[key].getName(), value -> args[value].toString()));
 
-            LOGGER.info(() -> String.format(">> Running %s with %s", methodName, params));
+            boolean foundHttpServletRequest = false;
+            for (int i = 0; i < parameters.length; i++) {
+                if (parameters[i].getName().equals("httpServletRequest")) {
+                    foundHttpServletRequest = true;
+                    break;
+                }
+            }
+
+            if (foundHttpServletRequest) {
+                LOGGER.info(() -> String.format(">> [Found HttpServletRequest] Running %s with %s", methodName, params));
+            } else {
+                LOGGER.info(() -> String.format(">> Running %s with %s", methodName, params));
+            }
         } else {
             LOGGER.info(() -> String.format(">> Running %s with no parameters", methodName));
         }

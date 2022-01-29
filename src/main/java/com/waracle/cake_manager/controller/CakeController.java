@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -52,11 +53,23 @@ public class CakeController {
      */
     @LogMethodAccess
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, final HttpServletRequest httpServletRequest) {
         model.addAttribute("cakes", cakeService.getAvailableCakes(3));
 
         // To trigger a modal as soon as the index view is rendered
         //model.addAttribute("exceptionIssue", "Blah blah blah...");
+
+        if (httpServletRequest.getMethod().equals("GET")) {
+            LOGGER.info("\tGET method used!");
+        }
+
+        return "index";
+    }
+
+    @LogMethodAccess
+    @GetMapping("/all-cakes")
+    public String allCakes(Model model, final HttpServletRequest httpServletRequest) {
+        model.addAttribute("cakes", cakeService.getAvailableCakes());
 
         return "index";
     }
@@ -90,7 +103,7 @@ public class CakeController {
     @LogMethodAccess
     @PostMapping("/new-cake-details")
     public String onSubmit(@ModelAttribute("newCakeDetails") @Valid NewCakeDetails newCakeDetails,
-                           final Errors errors, final Model model) {
+                           final Errors errors, final Model model, final HttpServletRequest httpServletRequest) {
         String view = "form";
 
         model.addAttribute("formFragment", "new-cake-details");
@@ -111,6 +124,11 @@ public class CakeController {
         }
 
         LOGGER.info(onSubmitMsg);
+
+        // CGI variable REQUEST_METHOD - https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+        if (httpServletRequest.getMethod().equals("POST")) {
+            LOGGER.info("\tPOST method used!");
+        }
 
         return view;
     }

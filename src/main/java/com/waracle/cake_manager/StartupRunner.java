@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cake_manager.advice.LogMethodAccess;
 import com.waracle.cake_manager.dto.CakeDto;
-import com.waracle.cake_manager.dto.Cakes;
 import com.waracle.cake_manager.model.Cake;
 import com.waracle.cake_manager.repository.CakeRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +22,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Set-up the JSON cake data in the H2 embedded database
+ * Set up the JSON cake data in the H2 embedded database
  */
 @Component
 public class StartupRunner implements CommandLineRunner {
@@ -47,6 +46,7 @@ public class StartupRunner implements CommandLineRunner {
         String jsonCakeData = getJsonCakeData();
         if (StringUtils.isNotBlank(jsonCakeData)) {
             ObjectMapper objectMapper = new ObjectMapper();
+            // When dealing with a collection in the JSON, use TypeReference
             List<CakeDto> cakes = objectMapper.readValue(jsonCakeData, new TypeReference<List<CakeDto>>() {});
             // Make sure there are cakes to save...
             if (cakes != null && !cakes.isEmpty()) {
@@ -74,7 +74,8 @@ public class StartupRunner implements CommandLineRunner {
             jsonCakeData = EntityUtils.toString(entity);
         }
 
-        LOGGER.info(String.format("\tJSON cake data is %s", jsonCakeData));
+        String finalJsonCakeData = jsonCakeData;
+        LOGGER.info(() -> String.format("\tJSON cake data is %s", finalJsonCakeData));
 
         return jsonCakeData;
     }

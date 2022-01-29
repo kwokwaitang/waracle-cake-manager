@@ -128,7 +128,7 @@ public class CakeServiceImpl implements CakeService {
 
     @Override
     public NewCakeRequestDto getNewCakeRequestDto(String title, String description, String image) {
-        return new NewCakeRequestDto(title, description, image);
+        return NewCakeRequestDto.of(title, description, image);
     }
 
     /**

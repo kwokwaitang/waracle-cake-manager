@@ -16,10 +16,14 @@ public class NewCakeRequestDto {
     public NewCakeRequestDto() {
     }
 
-    public NewCakeRequestDto(String title, String description, String imageUrl) {
+    private NewCakeRequestDto(String title, String description, String imageUrl) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
+    }
+
+    public static NewCakeRequestDto of(String title, String description, String imageUrl) {
+        return new NewCakeRequestDto(title, description, imageUrl);
     }
 
     public void setTitle(String title) {
