@@ -6,6 +6,7 @@ import com.waracle.cake_manager.dto.NewCakeResponseDto;
 import com.waracle.cake_manager.form.NewCakeDetails;
 
 import java.util.List;
+import java.util.SortedSet;
 
 public interface CakeService {
     /**
@@ -14,6 +15,8 @@ public interface CakeService {
      * @return List of cakes
      */
     List<CakeDto> getAvailableCakes();
+
+    SortedSet<CakeDto> getAvailableCakesSorted();
 
     /**
      * Retrieve a limited list of available cakes from a database

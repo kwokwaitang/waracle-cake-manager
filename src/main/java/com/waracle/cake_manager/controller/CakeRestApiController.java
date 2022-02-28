@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.SortedSet;
 import java.util.logging.Logger;
 
 /**
@@ -44,9 +45,15 @@ public class CakeRestApiController {
         return ResponseEntity.ok(cakeService.getAvailableCakes());
     }
 
+    @LogMethodAccess
+    @GetMapping("/cakes-in-sorted-order")
+    public ResponseEntity<SortedSet<CakeDto>> getSortedCakes() {
+        return ResponseEntity.ok(cakeService.getAvailableCakesSorted());
+    }
+
     /**
      * "The /cakes endpoint must also allow new cakes to be created."
-     *
+     * <p>
      * An example JSON to post...
      * <pre>
      *     {
@@ -55,7 +62,6 @@ public class CakeRestApiController {
      *          "imageUrl" : "https://cdn.shopify.com/s/files/1/0490/6418/1918/products/DD_Lotus_Cake_Full-scaled-1.jpg?v=1602446203"
      *      }
      * </pre>
-     *
      *
      * @param newCakeRequestDto
      * @return Response containing the primary value of the newly added cake

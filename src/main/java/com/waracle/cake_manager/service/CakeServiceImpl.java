@@ -23,9 +23,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -55,6 +53,16 @@ public class CakeServiceImpl implements CakeService {
         }
 
         return Collections.emptyList();
+    }
+
+    @Override
+    public SortedSet<CakeDto> getAvailableCakesSorted() {
+        List<Cake> cakes = (List<Cake>) cakeRepository.findAll();
+        if (!cakes.isEmpty()) {
+            return mapSortedSet(cakes, CakeDto.class);
+        }
+
+        return Collections.emptySortedSet();
     }
 
     @Override
@@ -147,5 +155,12 @@ public class CakeServiceImpl implements CakeService {
                 .stream()
                 .map(sourceObject -> modelMapper.map(sourceObject, targetClass))
                 .collect(Collectors.toList());
+    }
+
+    private <S, T> SortedSet<T> mapSortedSet(List<S> sourceObjects, Class<T> targetClass) {
+        return sourceObjects
+                .stream()
+                .map(sourceObject -> modelMapper.map(sourceObject, targetClass))
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 }

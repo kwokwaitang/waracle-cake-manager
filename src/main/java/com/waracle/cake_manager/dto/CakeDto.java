@@ -2,19 +2,27 @@ package com.waracle.cake_manager.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.lang.Nullable;
 
-import javax.persistence.Column;
+public class CakeDto implements Comparable<CakeDto> {
 
-public class CakeDto {
-
+    @JsonProperty("employeeId")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long employeeId;
 
+    @JsonProperty("title")
     private String title;
 
+    @JsonProperty("description")
     @JsonAlias("desc")
+    @ApiModelProperty(value = "Description", dataType = "String", example = "Whatever...")
     private String description;
 
+    // https://stackoverflow.com/questions/49032676/swagger-apimodelproperty-example-value-null-for-long
+    @JsonProperty("image")
+    @ApiModelProperty(value = "ABC", dataType = "String", example = "null")
     private String image;
 
     public CakeDto() {
@@ -73,5 +81,10 @@ public class CakeDto {
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(CakeDto that) {
+        return Long.compare(that.employeeId, this.employeeId);
     }
 }
