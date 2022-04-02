@@ -1,5 +1,6 @@
 package com.waracle.cake_manager.v1update;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ class TestControllerTest {
 
     TestRestTemplate testRestTemplate;
 
+    @Disabled("Not set-up as yet")
     @Test
     void shouldV1Update() {
         testRestTemplate = new TestRestTemplate();

@@ -1,12 +1,19 @@
 package com.waracle.cake_manager.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class NewCakeRequestDto {
     private String title;
 
     private String description;
 
+    @JsonProperty("imageUrl")
+    @Pattern(regexp = "^.*$")
+    @Size(min = 3, max = 88)
     private String imageUrl;
 
     public String getTitle() {

@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.lang.Nullable;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class CakeDto implements Comparable<CakeDto> {
 
     @JsonProperty("employeeId")
@@ -13,6 +16,8 @@ public class CakeDto implements Comparable<CakeDto> {
     private Long employeeId;
 
     @JsonProperty("title")
+    @Pattern(regexp = "^.*$")
+    @Size(min = 10, max = 1024)
     private String title;
 
     @JsonProperty("description")
@@ -22,7 +27,9 @@ public class CakeDto implements Comparable<CakeDto> {
 
     // https://stackoverflow.com/questions/49032676/swagger-apimodelproperty-example-value-null-for-long
     @JsonProperty("image")
-    @ApiModelProperty(value = "ABC", dataType = "String", example = "null")
+    //@ApiModelProperty(value = "ABC", dataType = "String", example = "null")
+    @Pattern(regexp = "^.*$")
+    @Size(min = 20, max = 2048)
     private String image;
 
     public CakeDto() {
