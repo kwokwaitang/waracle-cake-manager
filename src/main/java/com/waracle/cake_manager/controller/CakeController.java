@@ -116,10 +116,9 @@ public class CakeController {
             NewCakeResponseDto newCakeResponseDto = cakeService.addCake(newCakeRequestDto);
             LOGGER.info(() -> String.format("\tResponse is [%s]", newCakeResponseDto));
 
+            view = "unsuccessfully-added-cake";
             if (newCakeResponseDto.getId() != null) {
                 view = "successfully-added-cake";
-            } else {
-                view = "unsuccessfully-added-cake";
             }
         }
 
