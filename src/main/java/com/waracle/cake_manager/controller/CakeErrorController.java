@@ -15,11 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class CakeErrorController implements ErrorController {
 
+    // TODO not too sure if this is required!!!
     @GetMapping("/error")
     public String error(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if (status != null) {
-            Integer statusCode = Integer.valueOf(status.toString());
+            int statusCode = Integer.parseInt(status.toString());
 
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 return "errors/error-404";
@@ -35,7 +36,7 @@ public class CakeErrorController implements ErrorController {
 
     /**
      * This exception will generate a redirect to /error which is handled by
-     * {@link CakeErrorController#error(HttpServletRequest)}
+     * {@link CakeErrorController#error(HttpServletRequest, Model)}
      *
      * @return
      * @throws Exception
@@ -48,6 +49,8 @@ public class CakeErrorController implements ErrorController {
     /**
      * This custom runtime exception will be caught by
      * {@link com.waracle.cake_manager.controller.GlobalControllerExceptionHandler#handleMyOwnRuntimeException(RuntimeException)}
+     *
+     *  https://dev.localhost.com:8443/throw-my-own-exception
      *
      * @return
      * @throws RuntimeException

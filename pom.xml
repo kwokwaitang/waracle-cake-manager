@@ -161,6 +161,20 @@
             <artifactId>okeydoke</artifactId>
             <version>1.3.3</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.pitest/pitest -->
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.pitest/pitest-junit5-plugin -->
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>0.15</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -236,6 +250,21 @@
             <!-- docker run -p 8080:8080 -p 8443:8443 -p 80:80 - -name another-cake-manager cake-manager:another-main -->
 
             <!-- io.fabric8 plugin end -->
+
+            <!-- https://pitest.org/ -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.7.5</version>
+                <configuration>
+                    <targetClasses>
+                        <param>com.waracle.cake_manager*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.waracle.cake_manager*</param>
+                    </targetTests>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

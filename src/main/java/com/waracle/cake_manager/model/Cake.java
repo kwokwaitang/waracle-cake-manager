@@ -1,6 +1,8 @@
 package com.waracle.cake_manager.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "CAKE")
@@ -11,6 +13,8 @@ public class Cake {
     private Long employeeId;
 
     @Column(name = "TITLE")
+    @Pattern(regexp = "^[0-9A-Za-z ]{10,255}$")
+    @Size(min = 10, max = 255)
     private String title;
 
     @Column(name = "DESCRIPTION")
